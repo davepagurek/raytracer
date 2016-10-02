@@ -1,12 +1,15 @@
 import Foundation
 
 struct Raytracer {
+  static let MAX_BOUNCES = 20
+  
   let width: Scalar
   let height: Scalar
   let distance: Scalar
   let center: Vector4 = Point(x: 0, y: 0, z: 0)
   
   let surface: Surface
+  let background: Material
   
   func rays(w: Int, h: Int) -> [[Ray]] {
     return (0..<h).map{ (y: Int) -> [Ray] in
@@ -17,27 +20,24 @@ struct Raytracer {
             x: lerp(-width/2, width/2, Scalar(x)/Scalar(w)),
             y: lerp(height/2, -height/2, Scalar(y)/Scalar(h)),
             z: -distance
-          ) - center)
+            ) - center),
+          color: Color(0xFFFFFF)
         )
       }
     }
   }
   
-  func rayColor(_ ray: Ray) -> Color {
-    if let intersection = surface.intersectsRay(ray) {
-      return Color(
-        r: Int(128 * (intersection.normal.x + 1)),
-        g: Int(128 * (intersection.normal.y + 1)),
-        b: Int(128 * (intersection.normal.z + 1))
-      )
+  func rayColor(_ ray: Ray, bounce: Int = 0) -> Color {
+    if bounce < Raytracer.MAX_BOUNCES, let intersection = surface.intersectsRay(ray) {
+      return rayColor(intersection.bounce(ray), bounce: bounce+1)
     } else {
-      return ray.background()
+      return background.reflectedColor(ray)
     }
   }
   
   func render(w: Int, h: Int) -> [[Color]] {
     return rays(w: w*2, h: h*2)
-      .mapGrid(rayColor)
+      .mapGrid{ rayColor($0) }
       .blend()
   }
 }

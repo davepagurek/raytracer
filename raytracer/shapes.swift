@@ -2,12 +2,6 @@ import Foundation
 
 typealias Face = [Vector4]
 
-struct Intersection {
-  let point: Vector4
-  let normal: Vector4
-  let time: Scalar = 0
-}
-
 protocol Surface {
   func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection?
 }
@@ -50,6 +44,7 @@ class Mesh {
 struct Sphere: Surface {
   let center: Vector4
   let radius: Scalar
+  let material: Material
   
   func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection? {
     // Quadratic formula
@@ -67,7 +62,8 @@ struct Sphere: Surface {
         let point = ray.pointAt(t)
         return Intersection(
           point: point,
-          normal: normalAt(point)
+          normal: normalAt(point),
+          material: material
         )
       } else {
         return nil

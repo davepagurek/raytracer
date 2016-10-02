@@ -12,6 +12,10 @@ func writePPM(file: String, pixels: [[Color]]) {
     ).write(toFile: file, atomically: true, encoding: String.Encoding.utf8)
 }
 
+func rand(_ low: Scalar, _ high: Scalar) -> Scalar {
+  return low + (high-low)*(Float(arc4random()) / Float(UINT32_MAX))
+}
+
 func lerp(_ from: Scalar, _ to: Scalar, _ amount: Scalar) -> Scalar {
   return ((1-amount)*from) + (amount*to)
 }

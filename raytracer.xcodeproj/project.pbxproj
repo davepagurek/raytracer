@@ -12,6 +12,7 @@
 		AA0DD9B21DA08CF000C398B6 /* shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DD9B11DA08CF000C398B6 /* shapes.swift */; };
 		AA0DD9B41DA09E7700C398B6 /* helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DD9B31DA09E7700C398B6 /* helpers.swift */; };
 		AA52EE211D9F7668006C460F /* Raytracer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA52EE201D9F7668006C460F /* Raytracer.swift */; };
+		AA71E9BF1DA1B91700838943 /* Material.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA71E9BE1DA1B91700838943 /* Material.swift */; };
 		AA7541B71D9F5F94009E314D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7541B61D9F5F94009E314D /* main.swift */; };
 		AA7541BF1D9F5FB3009E314D /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7541BD1D9F5FB3009E314D /* Types.swift */; };
 		AA7541C01D9F5FB3009E314D /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7541BE1D9F5FB3009E314D /* VectorMath.swift */; };
@@ -35,6 +36,7 @@
 		AA0DD9B11DA08CF000C398B6 /* shapes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = shapes.swift; sourceTree = "<group>"; };
 		AA0DD9B31DA09E7700C398B6 /* helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = helpers.swift; sourceTree = "<group>"; };
 		AA52EE201D9F7668006C460F /* Raytracer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Raytracer.swift; sourceTree = "<group>"; };
+		AA71E9BE1DA1B91700838943 /* Material.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Material.swift; sourceTree = "<group>"; };
 		AA7541B31D9F5F94009E314D /* raytracer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = raytracer; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA7541B61D9F5F94009E314D /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		AA7541BD1D9F5FB3009E314D /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				AA0DD9AD1DA0803100C398B6 /* Color.swift */,
 				AA7541BD1D9F5FB3009E314D /* Types.swift */,
 				AA0DD9AF1DA08CD700C398B6 /* Ray.swift */,
+				AA71E9BE1DA1B91700838943 /* Material.swift */,
 				AA0DD9B31DA09E7700C398B6 /* helpers.swift */,
 				AA0DD9B11DA08CF000C398B6 /* shapes.swift */,
 				AA52EE201D9F7668006C460F /* Raytracer.swift */,
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA0DD9B21DA08CF000C398B6 /* shapes.swift in Sources */,
+				AA71E9BF1DA1B91700838943 /* Material.swift in Sources */,
 				AA7541B71D9F5F94009E314D /* main.swift in Sources */,
 				AA7541C01D9F5FB3009E314D /* VectorMath.swift in Sources */,
 				AA0DD9B41DA09E7700C398B6 /* helpers.swift in Sources */,
