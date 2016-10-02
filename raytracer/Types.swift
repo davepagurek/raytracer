@@ -8,10 +8,6 @@
 
 import Foundation
 
-typealias Face = [Vector4]
-
-typealias Mesh = [Face]
-
 func Point(x: Scalar, y: Scalar, z: Scalar) -> Vector4 {
   return Vector4(x, y, z, 1)
 }

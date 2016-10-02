@@ -474,7 +474,11 @@ extension Vector4: Equatable, Hashable {
     public func dot(_ v: Vector4) -> Scalar {
         return x * v.x + y * v.y + z * v.z + w * v.w
     }
-    
+  
+    public func projectionOf(_ v: Vector4) -> Vector4 {
+        return normalized() * dot(v)
+    }
+  
     public func normalized() -> Vector4 {
         let lengthSquared = self.lengthSquared
         if lengthSquared ~= 0 || lengthSquared ~= 1 {
