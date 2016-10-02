@@ -10,6 +10,41 @@ import Foundation
 
 typealias Face = [Vector4]
 
+struct Intersection {
+  let point: Vector4
+  let normal: Vector4
+  let time: Scalar = 0
+}
+
+protocol Surface {
+  func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection?
+}
+
+extension Surface {
+  func intersectsRay(_ ray: Ray) -> Intersection? {
+    return intersectsRay(ray, min: 0, max: Scalar.infinity)
+  }
+}
+
+struct SurfaceList: Surface {
+  let surfaces: [Surface]
+  
+  func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection? {
+    return surfaces.reduce(nil) { (prev: Intersection?, next: Surface) -> Intersection? in
+      let intersection = next.intersectsRay(ray, min: min, max: max)
+      if let prev = prev, let intersection = intersection {
+        if (prev.point - ray.point).lengthSquared > (intersection.point - ray.point).lengthSquared {
+          return intersection
+        } else {
+          return prev
+        }
+      } else {
+        return prev ?? intersection
+      }
+    }
+  }
+}
+
 class Mesh {
   let faces: [Face]
   let transformations: [Matrix4]
@@ -20,11 +55,11 @@ class Mesh {
   }
 }
 
-struct Sphere {
+struct Sphere: Surface {
   let center: Vector4
   let radius: Scalar
   
-  func intersectsRay(_ ray: Ray) -> Vector4? {
+  func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection? {
     // Quadratic formula
     let toCenter = ray.point - center
     let a = ray.direction.lengthSquared
@@ -35,7 +70,16 @@ struct Sphere {
       return nil
     } else {
       let t = (-b - sqrt(descriminant)) / (2*a)
-      return ray.pointAt(t)
+      
+      if t >= min && t <= max {
+        let point = ray.pointAt(t)
+        return Intersection(
+          point: point,
+          normal: normalAt(point)
+        )
+      } else {
+        return nil
+      }
     }
   }
   

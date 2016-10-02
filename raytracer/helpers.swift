@@ -25,3 +25,12 @@ func lerpColor(_ from: Int, _ to: Int, _ amount: Scalar) -> Color {
   let toColor = Color(to)
   return lerpColor(fromColor, toColor, amount)
 }
+
+func shell(_ args: String...) -> Int32 {
+  let task = Process()
+  task.launchPath = "/usr/bin/env"
+  task.arguments = args
+  task.launch()
+  task.waitUntilExit()
+  return task.terminationStatus
+}

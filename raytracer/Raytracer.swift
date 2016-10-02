@@ -14,7 +14,7 @@ struct Raytracer {
   let distance: Scalar
   let center: Vector4 = Point(x: 0, y: 0, z: 0)
   
-  let objects: [Sphere]
+  let surface: Surface
   
   func rays(w: Int, h: Int) -> [[Ray]] {
     return (0..<h).map{ (y: Int) -> [Ray] in
@@ -31,27 +31,13 @@ struct Raytracer {
     }
   }
   
-  typealias Intersection = (object: Sphere, point: Vector4)
-  func firstIntersection(_ ray: Ray) -> Intersection? {
-    return objects.reduce(nil) { (prev: Intersection?, next: Sphere) -> Intersection? in
-      if prev != nil {
-        return prev
-      } else if let intersection = next.intersectsRay(ray) {
-        return (object: next, point: intersection)
-      } else {
-        return nil
-      }
-    }
-  }
-  
   func render(w: Int, h: Int) -> [[Color]] {
     return rays(w: w, h: h).mapGrid{ (ray: Ray) -> Color in
-      if let intersection = firstIntersection(ray) {
-        let normal = intersection.object.normalAt(intersection.point)
+      if let intersection = surface.intersectsRay(ray) {
         return Color(
-          r: Int(128 * (normal.x + 1)),
-          g: Int(128 * (normal.y + 1)),
-          b: Int(128 * (normal.z + 1))
+          r: Int(128 * (intersection.normal.x + 1)),
+          g: Int(128 * (intersection.normal.y + 1)),
+          b: Int(128 * (intersection.normal.z + 1))
         )
       } else {
         return ray.background()
