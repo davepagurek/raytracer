@@ -1,12 +1,16 @@
-//
-//  Helpers.swift
-//  raytracer
-//
-//  Created by David Pagurek van Mossel on 10/1/16.
-//  Copyright © 2016 David Pagurek van Mossel. All rights reserved.
-//
-
 import Foundation
+
+func writePPM(file: String, pixels: [[Color]]) {
+  try! ("P3\n" +
+    "\(pixels.first?.count ?? 0) \(pixels.count)\n" +
+    "255\n" +
+    pixels.map { (row: [Color]) -> String in
+      return row.map { (c: Color) -> String in
+        return "\(c.r) \(c.g) \(c.b)"
+        }.joined(separator: "\n")
+      }.joined(separator: "\n")
+    ).write(toFile: file, atomically: true, encoding: String.Encoding.utf8)
+}
 
 func lerp(_ from: Scalar, _ to: Scalar, _ amount: Scalar) -> Scalar {
   return ((1-amount)*from) + (amount*to)
@@ -18,6 +22,10 @@ func lerpColor(_ from: Color, _ to: Color, _ amount: Scalar) -> Color {
     g: Int(((1-amount)*Scalar(from.g)) + (amount*Scalar(to.g))),
     b: Int(((1-amount)*Scalar(from.b)) + (amount*Scalar(to.b)))
   )
+}
+
+func blendColors(_ from: Color, _ to: Color) -> Color {
+  return lerpColor(from, to, 0.5)
 }
 
 func lerpColor(_ from: Int, _ to: Int, _ amount: Scalar) -> Color {
@@ -33,4 +41,12 @@ func shell(_ args: String...) -> Int32 {
   task.launch()
   task.waitUntilExit()
   return task.terminationStatus
+}
+
+extension Array {
+  func chunk(_ chunkSize: Int) -> Array<Array<Element>> {
+    return stride(from: 0, to: self.count, by: chunkSize).map {
+      Array(self[$0..<($0 + chunkSize)])
+    }
+  }
 }

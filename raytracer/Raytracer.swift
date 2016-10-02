@@ -1,11 +1,3 @@
-//
-//  Raytracer.swift
-//  raytracer
-//
-//  Created by David Pagurek van Mossel on 9/30/16.
-//  Copyright © 2016 David Pagurek van Mossel. All rights reserved.
-//
-
 import Foundation
 
 struct Raytracer {
@@ -31,17 +23,21 @@ struct Raytracer {
     }
   }
   
-  func render(w: Int, h: Int) -> [[Color]] {
-    return rays(w: w, h: h).mapGrid{ (ray: Ray) -> Color in
-      if let intersection = surface.intersectsRay(ray) {
-        return Color(
-          r: Int(128 * (intersection.normal.x + 1)),
-          g: Int(128 * (intersection.normal.y + 1)),
-          b: Int(128 * (intersection.normal.z + 1))
-        )
-      } else {
-        return ray.background()
-      }
+  func rayColor(_ ray: Ray) -> Color {
+    if let intersection = surface.intersectsRay(ray) {
+      return Color(
+        r: Int(128 * (intersection.normal.x + 1)),
+        g: Int(128 * (intersection.normal.y + 1)),
+        b: Int(128 * (intersection.normal.z + 1))
+      )
+    } else {
+      return ray.background()
     }
+  }
+  
+  func render(w: Int, h: Int) -> [[Color]] {
+    return rays(w: w*2, h: h*2)
+      .mapGrid(rayColor)
+      .blend()
   }
 }
