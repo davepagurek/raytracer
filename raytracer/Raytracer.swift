@@ -23,7 +23,7 @@ struct Raytracer {
           point: center,
           direction: (Point(
             x: lerp(-width/2, width/2, Scalar(x)/Scalar(w)),
-            y: lerp(-height/2, height/2, Scalar(y)/Scalar(h)),
+            y: lerp(height/2, -height/2, Scalar(y)/Scalar(h)),
             z: -distance
           ) - center)
         )
@@ -31,10 +31,28 @@ struct Raytracer {
     }
   }
   
+  typealias Intersection = (object: Sphere, point: Vector4)
+  func firstIntersection(_ ray: Ray) -> Intersection? {
+    return objects.reduce(nil) { (prev: Intersection?, next: Sphere) -> Intersection? in
+      if prev != nil {
+        return prev
+      } else if let intersection = next.intersectsRay(ray) {
+        return (object: next, point: intersection)
+      } else {
+        return nil
+      }
+    }
+  }
+  
   func render(w: Int, h: Int) -> [[Color]] {
     return rays(w: w, h: h).mapGrid{ (ray: Ray) -> Color in
-      if objects.contains(where: { $0.intersectsRay(ray) }) {
-        return Color(0x000000)
+      if let intersection = firstIntersection(ray) {
+        let normal = intersection.object.normalAt(intersection.point)
+        return Color(
+          r: Int(128 * (normal.x + 1)),
+          g: Int(128 * (normal.y + 1)),
+          b: Int(128 * (normal.z + 1))
+        )
       } else {
         return ray.background()
       }

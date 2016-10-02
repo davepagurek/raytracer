@@ -24,13 +24,22 @@ struct Sphere {
   let center: Vector4
   let radius: Scalar
   
-  func intersectsRay(_ ray: Ray) -> Bool {
+  func intersectsRay(_ ray: Ray) -> Vector4? {
     // Quadratic formula
     let toCenter = ray.point - center
     let a = ray.direction.lengthSquared
     let b = toCenter.dot(ray.direction) * 2
     let c = toCenter.lengthSquared - radius*radius
     let descriminant = b*b - 4*a*c
-    return descriminant > 0
+    if (descriminant < 0) {
+      return nil
+    } else {
+      let t = (-b - sqrt(descriminant)) / (2*a)
+      return ray.pointAt(t)
+    }
+  }
+  
+  func normalAt(_ point: Vector4) -> Vector4 {
+    return (point - center).normalized()
   }
 }
