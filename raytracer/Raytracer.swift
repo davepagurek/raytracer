@@ -35,9 +35,11 @@ struct Raytracer {
     }
   }
   
-  func render(w: Int, h: Int) -> [[Color]] {
-    return rays(w: w*2, h: h*2)
-      .mapGrid{ rayColor($0) }
-      .blend()
+  func render(w: Int, h: Int, samples: Int = 1) -> [[Color]] {
+    return (1...samples).map{ (_) -> [[Color]] in
+      return rays(w: w*2, h: h*2)
+        .mapGrid{ rayColor($0) }
+        .blend()
+    }.average().adjustGamma(0.5)
   }
 }

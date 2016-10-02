@@ -20,10 +20,11 @@ writePPM(
         material: Diffuse(color: Color(0xFFFFFF), reflectivity: 0.5)
       )
     ]),
-    background: Sky(top: Color(0x8AEBD3), bottom: Color(0xEBDC8A))
+    background: Sky(top: Color(0xFFFFFF), bottom: Color(0x9999FF))
   ).render(
     w: 200,
-    h: 100
+    h: 100,
+    samples: 10
   )
 )
 

@@ -18,9 +18,9 @@ struct Diffuse: Material {
   
   func reflectedColor(_ ray: Ray) -> Color {
     return Color(
-      r: Int(reflectivity * Scalar(ray.color.r * color.r) / 255),
-      g: Int(reflectivity * Scalar(ray.color.g * color.g) / 255),
-      b: Int(reflectivity * Scalar(ray.color.b * color.b) / 255)
+      r: reflectivity * (ray.color.r * color.r),
+      g: reflectivity * (ray.color.g * color.g),
+      b: reflectivity * (ray.color.b * color.b)
     )
   }
 }
@@ -30,11 +30,11 @@ struct Sky: Material {
   
   func reflectedColor(_ ray: Ray) -> Color {
     let t = 0.5 * (ray.direction.normalized().y + 1)
-    let color = lerpColor(top, bottom, t)
+    let color = lerpColor(bottom, top, t)
     return Color(
-      r: Int(Scalar(ray.color.r * color.r) / 255),
-      g: Int(Scalar(ray.color.g * color.g) / 255),
-      b: Int(Scalar(ray.color.b * color.b) / 255)
+      r: ray.color.r * color.r,
+      g: ray.color.g * color.g,
+      b: ray.color.b * color.b
     )
   }
 }

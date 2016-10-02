@@ -6,7 +6,7 @@ func writePPM(file: String, pixels: [[Color]]) {
     "255\n" +
     pixels.map { (row: [Color]) -> String in
       return row.map { (c: Color) -> String in
-        return "\(c.r) \(c.g) \(c.b)"
+        return "\(Int(c.r*255)) \(Int(c.g*255)) \(Int(c.b*255))"
         }.joined(separator: "\n")
       }.joined(separator: "\n")
     ).write(toFile: file, atomically: true, encoding: String.Encoding.utf8)
@@ -22,9 +22,9 @@ func lerp(_ from: Scalar, _ to: Scalar, _ amount: Scalar) -> Scalar {
 
 func lerpColor(_ from: Color, _ to: Color, _ amount: Scalar) -> Color {
   return Color(
-    r: Int(((1-amount)*Scalar(from.r)) + (amount*Scalar(to.r))),
-    g: Int(((1-amount)*Scalar(from.g)) + (amount*Scalar(to.g))),
-    b: Int(((1-amount)*Scalar(from.b)) + (amount*Scalar(to.b)))
+    r: ((1-amount)*from.r) + (amount*to.r),
+    g: ((1-amount)*from.g) + (amount*to.g),
+    b: ((1-amount)*from.b) + (amount*to.b)
   )
 }
 
