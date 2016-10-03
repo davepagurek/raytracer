@@ -8,7 +8,7 @@ protocol Surface {
 
 extension Surface {
   func intersectsRay(_ ray: Ray) -> Intersection? {
-    return intersectsRay(ray, min: 0, max: Scalar.infinity)
+    return intersectsRay(ray, min: 0.0001, max: Scalar.infinity)
   }
 }
 
