@@ -35,11 +35,20 @@ struct Raytracer {
     }
   }
   
-  func render(w: Int, h: Int, samples: Int = 1) -> [[Color]] {
-    return (1...samples).map{ (_) -> [[Color]] in
-      return rays(w: w*2, h: h*2)
-        .mapGrid{ rayColor($0) }
+  func render(w: Int, h: Int, samples: Int = 1, callback: @escaping ([[Color]]) -> ()) {
+    return ([Int](1...samples)).concurrentMap(transform: { (sample: Int) -> [[Color]] in
+      let image = self.rays(w: w*2, h: h*2)
+        .mapGrid{ self.rayColor($0) }
         .blend()
-    }.average().adjustGamma(0.5)
+      
+      let thread = Thread.current
+      let threadNumber = thread.value(forKeyPath: "private.seqNum") ?? 0
+      print("Finished sample \(sample) in thread \(threadNumber)")
+      
+      return image
+      
+    }, callback: { (images: [[[Color]]]) in
+        callback(images.average().adjustGamma(0.5))
+    })
   }
 }

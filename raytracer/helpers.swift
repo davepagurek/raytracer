@@ -53,4 +53,28 @@ extension Array {
       Array(self[$0..<($0 + chunkSize)])
     }
   }
+  
+  func concurrentMap<U>(transform: @escaping (Element) -> U, callback: @escaping (Array<U>) -> ()) {
+    let queue = DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
+    let group = DispatchGroup()
+    
+    let sync = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
+    //var index = 0
+    
+    let r = transform(self[0] as Element)
+    var results = Array<U>(repeating:r, count: self.count)
+    
+    for (index, item) in enumerated() {
+      queue.async(group: group) {
+        let r = transform(item as Element)
+        sync.sync() {
+          results[index] = r
+        }
+      }
+    }
+    
+    group.notify(queue: sync) {
+      callback(results)
+    }
+  }
 }
