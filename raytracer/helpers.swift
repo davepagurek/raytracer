@@ -1,4 +1,5 @@
 import Foundation
+import Cocoa
 
 func writePPM(file: String, pixels: [[Color]]) {
   try! ("P3\n" +
@@ -10,6 +11,49 @@ func writePPM(file: String, pixels: [[Color]]) {
         }.joined(separator: "\n")
       }.joined(separator: "\n")
     ).write(toFile: file, atomically: true, encoding: String.Encoding.utf8)
+}
+
+struct PixelData {
+  let a:UInt8 = 255
+  let r, g, b: UInt8
+}
+func writePNG(file: String, pixels: [[Color]]) {
+  let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
+  let bitmapInfo:CGBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue)
+  
+  let bitsPerComponent:UInt = 8
+  let bitsPerPixel:UInt = 32
+  
+  let width = pixels.first!.count
+  let height = pixels.count
+  var data = pixels.joined().map{PixelData(
+    r: UInt8($0.r*255),
+    g: UInt8($0.g*255),
+    b: UInt8($0.b*255)
+  )}
+  
+  let providerRef = CGDataProvider(
+    data: NSData(bytes: &data, length: data.count * MemoryLayout<PixelData>.size)
+  )!
+  
+  let cgim = CGImage(
+    width: width,
+    height: height,
+    bitsPerComponent: Int(bitsPerComponent),
+    bitsPerPixel: Int(bitsPerPixel),
+    bytesPerRow: width * Int(MemoryLayout<PixelData>.size),
+    space: rgbColorSpace,
+    bitmapInfo: bitmapInfo,
+    provider: providerRef,
+    decode: nil,
+    shouldInterpolate: true,
+    intent: CGColorRenderingIntent.defaultIntent
+  )
+  
+  let image = NSImage(cgImage: cgim!, size: NSSize(width: width, height: height))
+  (NSBitmapImageRep(data: image.tiffRepresentation!)!
+    .representation(using: NSBitmapImageFileType.PNG, properties: [:])!
+   as NSData).write(toFile: file, atomically: true)
 }
 
 func rand(_ low: Scalar, _ high: Scalar) -> Scalar {

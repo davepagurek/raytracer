@@ -1,6 +1,6 @@
 import Foundation
 
-let file = "test.ppm"
+let file = "test.png"
 
 var waiting = true
 
@@ -22,7 +22,7 @@ Raytracer(
     Sphere(
       center: Point(x: 0, y: 1.75, z: -6),
       radius: 2,
-      material: Reflective(tintColor: Color(0xDDDDDD))
+      material: Reflective(tintColor: Color(0xCCCCDD))
     ),
     Sphere(
       center: Point(x: 0, y: -100.5, z: -3),
@@ -36,7 +36,7 @@ Raytracer(
   h: 200,
   samples: 10
 ) { (image: [[Color]]) in
-  writePPM(
+  writePNG(
     file: file,
     pixels: image
   )
