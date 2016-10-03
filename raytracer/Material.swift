@@ -9,32 +9,53 @@
 import Foundation
 
 protocol Material {
-  func reflectedColor(_ ray: Ray) -> Color
+  func scatter(_ ray: Ray, _ intersection: Intersection) -> Ray
 }
 
 struct Diffuse: Material {
   let color: Color
   let reflectivity: Scalar
   
-  func reflectedColor(_ ray: Ray) -> Color {
-    return Color(
-      r: reflectivity * (ray.color.r * color.r),
-      g: reflectivity * (ray.color.g * color.g),
-      b: reflectivity * (ray.color.b * color.b)
+  private func randomVector() -> Vector4 {
+    let vec = Vector(
+      x: rand(-1, 1),
+      y: rand(-1, 1),
+      z: rand(-1, 1)
+    )
+    
+    // Make sure it is in the unit sphere
+    if vec.lengthSquared < 1 {
+      return vec
+    } else {
+      return randomVector()
+    }
+  }
+  
+  func scatter(_ ray: Ray, _ intersection: Intersection) -> Ray {
+    return Ray(
+      point: intersection.point,
+      direction: intersection.normal + randomVector(),
+      color: Color(
+        r: reflectivity * (ray.color.r * color.r),
+        g: reflectivity * (ray.color.g * color.g),
+        b: reflectivity * (ray.color.b * color.b)
+      )
     )
   }
 }
 
-struct Sky: Material {
-  let top, bottom: Color
+struct Reflective: Material {
+  let tintColor: Color
   
-  func reflectedColor(_ ray: Ray) -> Color {
-    let t = 0.5 * (ray.direction.normalized().y + 1)
-    let color = lerpColor(bottom, top, t)
-    return Color(
-      r: ray.color.r * color.r,
-      g: ray.color.g * color.g,
-      b: ray.color.b * color.b
+  func scatter(_ ray: Ray, _ intersection: Intersection) -> Ray {
+    return Ray(
+      point: intersection.point,
+      direction: (ray.direction - intersection.normal * 2 * ray.direction.dot(intersection.normal)).normalized(),
+      color: Color(
+        r: tintColor.r * ray.color.r,
+        g: tintColor.g * ray.color.g,
+        b: tintColor.b * ray.color.b
+      )
     )
   }
 }

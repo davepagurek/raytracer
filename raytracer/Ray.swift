@@ -22,27 +22,4 @@ struct Intersection {
   let normal: Vector4
   let material: Material
   let time: Scalar = 0
-  
-  private func randomVector() -> Vector4 {
-    let vec = Vector(
-      x: rand(-1, 1),
-      y: rand(-1, 1),
-      z: rand(-1, 1)
-    )
-    
-    // Make sure it is in the unit sphere
-    if vec.lengthSquared < 1 {
-      return vec
-    } else {
-      return randomVector()
-    }
-  }
-  
-  func bounce(_ ray: Ray) -> Ray {
-    return Ray(
-      point: point,
-      direction: normal + randomVector(),
-      color: material.reflectedColor(ray)
-    )
-  }
 }

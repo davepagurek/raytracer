@@ -1,7 +1,5 @@
 import Foundation
 
-typealias Face = [Vector4]
-
 protocol Surface {
   func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection?
 }
@@ -9,6 +7,13 @@ protocol Surface {
 extension Surface {
   func intersectsRay(_ ray: Ray) -> Intersection? {
     return intersectsRay(ray, min: 0.0001, max: Scalar.infinity)
+  }
+  
+  func bounce(_ ray: Ray) -> Ray? {
+    if let intersection = intersectsRay(ray) {
+      return intersection.material.scatter(ray, intersection)
+    }
+    return nil
   }
 }
 
@@ -28,16 +33,6 @@ struct SurfaceList: Surface {
         return prev ?? intersection
       }
     }
-  }
-}
-
-class Mesh {
-  let faces: [Face]
-  let transformations: [Matrix4]
-  
-  init(faces: [Face], transformations: [Matrix4] = []) {
-    self.faces = faces
-    self.transformations = transformations
   }
 }
 

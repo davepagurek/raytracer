@@ -9,7 +9,7 @@ struct Raytracer {
   let center: Vector4 = Point(x: 0, y: 0, z: 0)
   
   let surface: Surface
-  let background: Material
+  let background: Source
   
   func rays(w: Int, h: Int) -> [[Ray]] {
     return (0..<h).map{ (y: Int) -> [Ray] in
@@ -28,10 +28,10 @@ struct Raytracer {
   }
   
   func rayColor(_ ray: Ray, bounce: Int = 0) -> Color {
-    if bounce < Raytracer.MAX_BOUNCES, let intersection = surface.intersectsRay(ray) {
-      return rayColor(intersection.bounce(ray), bounce: bounce+1)
+    if bounce < Raytracer.MAX_BOUNCES, let bounced = surface.bounce(ray) {
+      return rayColor(bounced, bounce: bounce+1)
     } else {
-      return background.reflectedColor(ray)
+      return background.colorFrom(ray)
     }
   }
   
