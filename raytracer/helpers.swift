@@ -122,3 +122,18 @@ extension Array {
     }
   }
 }
+
+func randomVector() -> Vector4 {
+  let vec = Vector(
+    x: rand(-1, 1),
+    y: rand(-1, 1),
+    z: rand(-1, 1)
+  )
+  
+  // Make sure it is in the unit sphere
+  if vec.lengthSquared < 1 {
+    return vec
+  } else {
+    return randomVector()
+  }
+}

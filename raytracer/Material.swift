@@ -16,21 +16,6 @@ struct Diffuse: Material {
   let color: Color
   let reflectivity: Scalar
   
-  private func randomVector() -> Vector4 {
-    let vec = Vector(
-      x: rand(-1, 1),
-      y: rand(-1, 1),
-      z: rand(-1, 1)
-    )
-    
-    // Make sure it is in the unit sphere
-    if vec.lengthSquared < 1 {
-      return vec
-    } else {
-      return randomVector()
-    }
-  }
-  
   func scatter(_ ray: Ray, _ intersection: Intersection) -> Ray {
     return Ray(
       point: intersection.point,
@@ -46,11 +31,16 @@ struct Diffuse: Material {
 
 struct Reflective: Material {
   let tintColor: Color
+  let fuzziness: Scalar
   
   func scatter(_ ray: Ray, _ intersection: Intersection) -> Ray {
     return Ray(
       point: intersection.point,
-      direction: (ray.direction - intersection.normal * 2 * ray.direction.dot(intersection.normal)).normalized(),
+      direction: (
+        ray.direction
+          - (intersection.normal * 2 * ray.direction.dot(intersection.normal))
+          + (randomVector() * fuzziness)
+        ).normalized(),
       color: Color(
         r: tintColor.r * ray.color.r,
         g: tintColor.g * ray.color.g,

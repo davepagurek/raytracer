@@ -12,6 +12,10 @@ extension Color {
       b: Scalar(hex & 0xFF)/255
     )
   }
+  
+  func brightness() -> Scalar {
+    return (r + g + b)/3
+  }
 }
 
 extension Collection where Iterator.Element == [Color] {

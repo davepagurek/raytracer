@@ -28,7 +28,9 @@ struct Raytracer {
   }
   
   func rayColor(_ ray: Ray, bounce: Int = 0) -> Color {
-    if bounce < Raytracer.MAX_BOUNCES, let bounced = surface.bounce(ray) {
+    if ray.color.brightness() ~= 0 {
+      return ray.color
+    } else if bounce < Raytracer.MAX_BOUNCES, let bounced = surface.bounce(ray) {
       return rayColor(bounced, bounce: bounce+1)
     } else {
       return background.colorFrom(ray)

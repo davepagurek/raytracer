@@ -22,7 +22,7 @@ Raytracer(
     Sphere(
       center: Point(x: 0, y: 1.75, z: -6),
       radius: 2,
-      material: Reflective(tintColor: Color(0xCCCCDD))
+      material: Reflective(tintColor: Color(0xCCCCDD), fuzziness: 0.6)
     ),
     Sphere(
       center: Point(x: 0, y: -100.5, z: -3),
