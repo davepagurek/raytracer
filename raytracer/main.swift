@@ -10,8 +10,17 @@ Raytracer(
   distance: 3,
   surface: SurfaceList(surfaces: [
     Sphere(
-      center: Point(x: -2, y: 0.75, z: -4),
-      radius: 0.75,
+      center: Point(x: 0.6, y: 0, z: -3),
+      radius: 0.4,
+      material: Transparent(
+        tintColor: Color(0xAAAAEE),
+        refractionIndex: 1.5,
+        fuzziness: 0
+      )
+    ),
+    Sphere(
+      center: Point(x: -2, y: 0.75, z: -3),
+      radius: 0.5,
       material: Diffuse(color: Color(0x3E97CF), reflectivity: 0.5)
     ),
     Sphere(
@@ -20,9 +29,9 @@ Raytracer(
       material: Diffuse(color: Color(0xD45F5F), reflectivity: 0.5)
     ),
     Sphere(
-      center: Point(x: 0, y: 1.75, z: -6),
-      radius: 2,
-      material: Reflective(tintColor: Color(0xCCCCDD), fuzziness: 0.6)
+      center: Point(x: -2.5, y: 1.75, z: -7),
+      radius: 2.3,
+      material: Reflective(tintColor: Color(0xCCCCDD), fuzziness: 0)
     ),
     Sphere(
       center: Point(x: 0, y: -100.5, z: -3),

@@ -99,14 +99,12 @@ extension Array {
   }
   
   func concurrentMap<U>(transform: @escaping (Element) -> U, callback: @escaping (Array<U>) -> ()) {
-    let queue = DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
+    let queue = DispatchQueue.global(qos: DispatchQoS.QoSClass.utility)
     let group = DispatchGroup()
     
-    let sync = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
-    //var index = 0
-    
-    let r = transform(self[0] as Element)
-    var results = Array<U>(repeating:r, count: self.count)
+    let sync = DispatchQueue.global(qos: DispatchQoS.QoSClass.utility)
+
+    var results = Array<U?>(repeating:nil, count: self.count)
     
     for (index, item) in enumerated() {
       queue.async(group: group) {
@@ -118,8 +116,22 @@ extension Array {
     }
     
     group.notify(queue: sync) {
-      callback(results)
+      callback(results.map{$0!})
     }
+  }
+}
+
+extension Vector4 {
+  func cosBetween(_ other: Vector4) -> Scalar {
+    return Scalar(self.dot(other) / self.lengthSquared)
+  }
+  
+  func angleBetween(_ other: Vector4) -> Scalar {
+    return Scalar(acos(Double(cosBetween(other))))
+  }
+  
+  func reflectAround(_ normal: Vector4) -> Vector4 {
+    return self - (normal * 2 * self.dot(normal))
   }
 }
 
