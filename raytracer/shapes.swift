@@ -2,7 +2,6 @@ import Foundation
 
 protocol Surface {
   func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection?
-  func absorb(_ ray: Ray) -> Ray
 }
 
 extension Surface {
@@ -12,7 +11,7 @@ extension Surface {
   
   func bounce(_ ray: Ray) -> Ray? {
     if let intersection = intersectsRay(ray) {
-      return absorb(intersection.material.scatter(ray, intersection))
+      return intersection.material.scatter(ray, intersection)
     }
     return nil
   }
@@ -34,10 +33,6 @@ struct SurfaceList: Surface {
         return prev ?? intersection
       }
     }
-  }
-  
-  func absorb(_ ray: Ray) -> Ray {
-    return ray
   }
 }
 
@@ -73,12 +68,5 @@ struct Sphere: Surface {
   
   func normalAt(_ point: Vector4) -> Vector4 {
     return (point - center).normalized()
-  }
-  
-  func absorb(_ ray: Ray) -> Ray {
-    if let _ = intersectsRay(ray) {
-      return Ray(point: ray.point, direction: ray.direction, color: Color(0x000000))
-    }
-    return ray
   }
 }

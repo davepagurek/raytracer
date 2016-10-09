@@ -38,6 +38,7 @@ struct Raytracer {
   }
   
   func render(w: Int, h: Int, samples: Int = 1, callback: @escaping ([[Color]]) -> ()) {
+    print("Running with \(samples) sample\(samples == 1 ? "" : "s")")
     return ([Int](1...samples)).concurrentMap(transform: { (sample: Int) -> [[Color]] in
       let image = self.rays(w: w*2, h: h*2)
         .mapGrid{ self.rayColor($0) }
