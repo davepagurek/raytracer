@@ -10,16 +10,16 @@ Raytracer(
   distance: 3,
   surface: SurfaceList(surfaces: [
     Sphere(
-      center: Point(x: 0.6, y: 0, z: -3),
-      radius: 0.4,
+      center: Point(x: 0.9, y: 0, z: -3),
+      radius: 0.5,
       material: Transparent(
-        tintColor: Color(0xAAAAEE),
+        tintColor: Color(0xDDDDDD),
         refractionIndex: 1.5,
         fuzziness: 0
       )
     ),
     Sphere(
-      center: Point(x: -2, y: 0.75, z: -3),
+      center: Point(x: -1.5, y: 0.75, z: -3),
       radius: 0.5,
       material: Diffuse(color: Color(0x3E97CF), reflectivity: 0.5)
     ),
@@ -29,7 +29,7 @@ Raytracer(
       material: Diffuse(color: Color(0xD45F5F), reflectivity: 0.5)
     ),
     Sphere(
-      center: Point(x: -2.5, y: 1.75, z: -7),
+      center: Point(x: -0.5, y: 1.75, z: -7),
       radius: 2.3,
       material: Reflective(tintColor: Color(0xCCCCDD), fuzziness: 0)
     ),
@@ -43,7 +43,7 @@ Raytracer(
 ).render(
   w: 400,
   h: 200,
-  samples: 10
+  samples: 20
 ) { (image: [[Color]]) in
   writePNG(
     file: file,
