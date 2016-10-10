@@ -5,9 +5,11 @@ let file = "test.png"
 var waiting = true
 
 Raytracer(
-  width: 4,
-  height: 2,
-  distance: 3,
+  camera: Camera(
+    origin: Point(x: 0, y: 0, z: 0),
+    vfov: 50,
+    aspect: 2
+  ),
   surface: SurfaceList(surfaces: [
     Sphere(
       center: Point(x: 0.9, y: 0, z: -3),
@@ -43,7 +45,7 @@ Raytracer(
 ).render(
   w: 400,
   h: 200,
-  samples: 20
+  samples: 10
 ) { (image: [[Color]]) in
   writePNG(
     file: file,
