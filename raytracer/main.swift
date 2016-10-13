@@ -5,12 +5,16 @@ let file = "test.png"
 var waiting = true
 
 Raytracer(
-  width: 4,
-  height: 2,
-  distance: 3,
+  camera: Camera(
+    from: Point(x: 0, y: 3, z: 0),
+    to: Point(x: 0, y: 0, z: -4),
+    up: Vector(x: 0, y: 1, z: 0),
+    vfov: 50,
+    aspect: 2
+  ),
   surface: SurfaceList(surfaces: [
     Sphere(
-      center: Point(x: 0.9, y: 0, z: -3),
+      center: Point(x: 0.9, y: 1.5, z: -3),
       radius: 0.5,
       material: Transparent(
         tintColor: Color(0xDDDDDD),
@@ -43,7 +47,7 @@ Raytracer(
 ).render(
   w: 400,
   h: 200,
-  samples: 20
+  samples: 10
 ) { (image: [[Color]]) in
   writePNG(
     file: file,
