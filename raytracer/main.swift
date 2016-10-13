@@ -6,13 +6,15 @@ var waiting = true
 
 Raytracer(
   camera: Camera(
-    origin: Point(x: 0, y: 0, z: 0),
+    from: Point(x: 0, y: 3, z: 0),
+    to: Point(x: 0, y: 0, z: -4),
+    up: Vector(x: 0, y: 1, z: 0),
     vfov: 50,
     aspect: 2
   ),
   surface: SurfaceList(surfaces: [
     Sphere(
-      center: Point(x: 0.9, y: 0, z: -3),
+      center: Point(x: 0.9, y: 1.5, z: -3),
       radius: 0.5,
       material: Transparent(
         tintColor: Color(0xDDDDDD),

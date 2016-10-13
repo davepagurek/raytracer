@@ -3,19 +3,25 @@ import Foundation
 struct Camera {
   let origin, swCorner, h, v: Vector4
   
-  init(origin: Vector4, vfov: Scalar, aspect: Scalar) {
+  init(from: Vector4, to: Vector4, up: Vector4, vfov: Scalar, aspect: Scalar) {
     let theta = Double(vfov) * M_PI/180
-    let halfHeight:Scalar = 1 //Scalar(tan(theta/2))
-    let halfWidth:Scalar = 2 // aspect*halfHeight
+    let halfHeight:Scalar = Scalar(tan(theta/2))
+    let halfWidth:Scalar = aspect*halfHeight
     
-    swCorner = origin + Vector(x: -halfWidth, y: -halfHeight, z: -3)
-    h = Vector(x: 2*halfWidth, y: 0, z: 0)
-    v = Vector(x: 0, y: 2*halfHeight, z: 0)
-    self.origin = origin
+    let direction = (from - to).normalized()
+    let x3 = up.xyz.cross(direction.xyz).normalized()
+    let y3 = direction.xyz.cross(x3).normalized()
+    let x = Vector(x: x3.x, y: x3.y, z: x3.z)
+    let y = Vector(x: y3.x, y: y3.y, z: y3.z)
+    
+    swCorner = from - (x*halfWidth) - (y*halfHeight) - direction
+    print(swCorner)
+    h = x * halfWidth * 2
+    v = y * halfHeight * 2
+    origin = from
   }
   
   func rayAt(x: Scalar, y: Scalar) -> Ray {
-    let origin = Point(x: 0, y: 0, z: 0)
     return Ray(
       point: origin,
       direction: (swCorner + (h*x) + (v*(1-y))) - origin,
