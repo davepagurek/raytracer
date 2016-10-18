@@ -149,3 +149,9 @@ func randomVector() -> Vector4 {
     return randomVector()
   }
 }
+
+func randomVectorInDisc() -> Vector4 {
+  let r = rand(0, 1)
+  let theta = rand(0, Scalar(M_PI*2))
+  return Vector(x: r*cos(theta), y: r*sin(theta), z: 0)
+}
