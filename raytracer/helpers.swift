@@ -7,7 +7,7 @@ func writePPM(file: String, pixels: [[Color]]) {
     "255\n" +
     pixels.map { (row: [Color]) -> String in
       return row.map { (c: Color) -> String in
-        return "\(Int(c.r*255)) \(Int(c.g*255)) \(Int(c.b*255))"
+        return "\(Int(clip(c.r*255, 0, 255))) \(Int(clip(c.g*255, 0, 255))) \(Int(clip(c.b*255, 0, 255)))"
         }.joined(separator: "\n")
       }.joined(separator: "\n")
     ).write(toFile: file, atomically: true, encoding: String.Encoding.utf8)
@@ -27,9 +27,9 @@ func writePNG(file: String, pixels: [[Color]]) {
   let width = pixels.first!.count
   let height = pixels.count
   var data = pixels.joined().map{PixelData(
-    r: UInt8($0.r*255),
-    g: UInt8($0.g*255),
-    b: UInt8($0.b*255)
+    r: UInt8(clip($0.r*255, 0, 255)),
+    g: UInt8(clip($0.g*255, 0, 255)),
+    b: UInt8(clip($0.b*255, 0, 255))
   )}
   
   let providerRef = CGDataProvider(
@@ -80,6 +80,16 @@ func lerpColor(_ from: Int, _ to: Int, _ amount: Scalar) -> Color {
   let fromColor = Color(from)
   let toColor = Color(to)
   return lerpColor(fromColor, toColor, amount)
+}
+
+func clip(_ n: Scalar, _ low: Scalar, _ high: Scalar) -> Scalar {
+  if (n < low) {
+    return low
+  }
+  if (n > high) {
+    return high
+  }
+  return n
 }
 
 func shell(_ args: String...) -> Int32 {

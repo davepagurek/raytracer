@@ -1,10 +1,10 @@
 import Foundation
 
-protocol Source {
+protocol Background {
   func colorFrom(_ ray: Ray) -> Color
 }
 
-struct Sky: Source {
+struct Sky: Background {
   let top, bottom: Color
   
   func colorFrom(_ ray: Ray) -> Color {

@@ -6,7 +6,7 @@ struct Raytracer {
   let camera: Camera
   
   let surface: Surface
-  let background: Source
+  let background: Background
   
   func rays(w: Int, h: Int) -> [[Ray]] {
     return (0..<h).map{ (y: Int) -> [Ray] in
@@ -20,10 +20,14 @@ struct Raytracer {
   }
   
   func rayColor(_ ray: Ray, bounce: Int = 0) -> Color {
-    if ray.color.brightness() ~= 0 {
-      return ray.color
-    } else if bounce < Raytracer.MAX_BOUNCES, let bounced = surface.bounce(ray) {
-      return rayColor(bounced, bounce: bounce+1)
+    if bounce >= Raytracer.MAX_BOUNCES || ray.color.brightness() ~= 0 {
+      return Color(0x000000)
+    } else if let (bounced, reachedSource) = surface.bounce(ray) {
+      if reachedSource {
+        return bounced.color
+      } else {
+        return rayColor(bounced, bounce: bounce+1)
+      }
     } else {
       return background.colorFrom(ray)
     }
