@@ -9,10 +9,32 @@
 import Foundation
 
 protocol Material {
-  func scatter(_ ray: Ray, _ intersection: Intersection) -> Ray
+  func scatter(_ ray: Ray, _ intersection: Intersection) -> (Ray, Bool)
 }
 
-struct Diffuse: Material {
+protocol Absorber: Material {
+  func scatter(_ ray: Ray, _ intersection: Intersection) -> Ray
+  func scatter(_ ray: Ray, _ intersection: Intersection) -> (Ray, Bool)
+}
+
+extension Absorber {
+  func scatter(_ ray: Ray, _ intersection: Intersection) -> (Ray, Bool) {
+    return (scatter(ray, intersection), false)
+  }
+}
+
+protocol Emitter: Material {
+  func scatter(_ ray: Ray, _ intersection: Intersection) -> Ray
+  func scatter(_ ray: Ray, _ intersection: Intersection) -> (Ray, Bool)
+}
+
+extension Emitter {
+  func scatter(_ ray: Ray, _ intersection: Intersection) -> (Ray, Bool) {
+    return (scatter(ray, intersection), true)
+  }
+}
+
+struct Diffuse: Absorber {
   let color: Color
   let reflectivity: Scalar
   
@@ -29,7 +51,7 @@ struct Diffuse: Material {
   }
 }
 
-struct Reflective: Material {
+struct Reflective: Absorber {
   let tintColor: Color
   let fuzziness: Scalar
   
@@ -49,7 +71,7 @@ struct Reflective: Material {
   }
 }
 
-struct Transparent: Material {
+struct Transparent: Absorber {
   let tintColor: Color
   let refractionIndex: Scalar
   let fuzziness: Scalar
@@ -101,6 +123,23 @@ struct Transparent: Material {
         r: tintColor.r * ray.color.r,
         g: tintColor.g * ray.color.g,
         b: tintColor.b * ray.color.b
+      )
+    )
+  }
+}
+
+struct LightEmitter: Emitter {
+  let tintColor: Color
+  let brightness: Scalar
+  
+  func scatter(_ ray: Ray, _ intersection: Intersection) -> Ray {
+    return Ray(
+      point: intersection.point,
+      direction: intersection.normal,
+      color: Color(
+        r: tintColor.r * ray.color.r * brightness,
+        g: tintColor.g * ray.color.g * brightness,
+        b: tintColor.b * ray.color.b * brightness
       )
     )
   }
