@@ -4,8 +4,8 @@ let file = "test.png"
 
 var waiting = true
 
-let origin = Point(x: 0, y: 3, z: 0)
-let focus = Point(x: -1, y: 1.8, z: -3)
+let origin = Point(x: 3, y: 1, z: 0)
+let focus = Point(x: 1, y: 0.3, z: -3)
 let aim = Point(x: 0, y: 0, z: -4)
 
 Raytracer(
@@ -15,23 +15,18 @@ Raytracer(
     up: Vector(x: 0, y: 1, z: 0),
     vfov: 50,
     aspect: 2,
-    aperture: 0.05,
+    aperture: 0.03,
     focalDistance: (focus - origin).length
   ),
   surface: SurfaceList(surfaces: [
     Sphere(
-      center: Point(x: 0.9, y: 1.5, z: -3),
+      center: Point(x: 0, y: 0.5, z: -3),
       radius: 0.5,
       material: Transparent(
         tintColor: Color(0xDDDDDD),
         refractionIndex: 1.5,
         fuzziness: 0
       )
-    ),
-    Sphere(
-      center: Point(x: 1.2, y: 1.8, z: -1),
-      radius: 0.5,
-      material: LightEmitter(tintColor: Color(0xFFE02A), brightness: 3)
     ),
     Sphere(
       center: Point(x: -1, y: 1.8, z: -3),
@@ -44,7 +39,7 @@ Raytracer(
       material: LightEmitter(tintColor: Color(0xFFE02A), brightness: 3)
     ),
     Sphere(
-      center: Point(x: -1.5, y: 0.75, z: -3),
+      center: Point(x: 3, y: 0.75, z: -3),
       radius: 0.5,
       material: Diffuse(color: Color(0x004358), reflectivity: 0.5)
     ),
@@ -54,26 +49,26 @@ Raytracer(
       material: Diffuse(color: Color(0xBEDB39), reflectivity: 0.5)
     ),
     Sphere(
-      center: Point(x: 2, y: 0, z: -5),
+      center: Point(x: 2, y: 0.5, z: -5),
       radius: 0.5,
       material: Diffuse(color: Color(0x1F8A70), reflectivity: 0.5)
     ),
     Sphere(
-      center: Point(x: -0.5, y: 1.75, z: -7),
+      center: Point(x: -0.5, y: 2.3, z: -7),
       radius: 2.3,
       material: Reflective(tintColor: Color(0xCCCCDD), fuzziness: 0)
     ),
-    Sphere(
-      center: Point(x: 0, y: -100.5, z: -3),
-      radius: 100,
-      material: Diffuse(color: Color(0xE8FFFC), reflectivity: 0.5)
+    InfinitePlane(
+      anchor: Point(x: 0, y: 0, z: 0),
+      normal: Vector(x: 0, y: 1, z: 0),
+      material: Reflective(tintColor: Color(0x666666), fuzziness: 0.5)
     )
   ]),
   background: Sky(top: Color(0x8F86D9), bottom: Color(0x8348B0))
 ).render(
-  w: 400,
-  h: 200,
-  samples: 40
+  w: 800,
+  h: 400,
+  samples: 32
 ) { (image: [[Color]]) in
   writePNG(
     file: file,
