@@ -62,13 +62,19 @@ Raytracer(
       anchor: Point(x: 0, y: 0, z: 0),
       normal: Vector(x: 0, y: 1, z: 0),
       material: Reflective(tintColor: Color(0x666666), fuzziness: 0.5)
+    ),
+    Triangle(
+      a: Point(x: 2.5, y: 0, z: -2),
+      b: Point(x: 1.5, y: 0, z: -2),
+      c: Point(x: 2, y: 1, z: -2),
+      material: Diffuse(color: Color(0xFFFFFF), reflectivity: 0.3)
     )
   ]),
   background: Sky(top: Color(0x8F86D9), bottom: Color(0x8348B0))
 ).render(
-  w: 800,
-  h: 400,
-  samples: 32
+  w: 400,
+  h: 200,
+  samples: 4
 ) { (image: [[Color]]) in
   writePNG(
     file: file,
