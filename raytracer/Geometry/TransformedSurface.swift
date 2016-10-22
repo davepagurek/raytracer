@@ -17,7 +17,8 @@ struct TransformedSurface: Surface {
       return Intersection(
         point: transformation * intersection.point,
         normal: transformation * intersection.normal,
-        material: intersection.material
+        material: intersection.material,
+        time: ray.time
       )
     } else {
       return nil
@@ -25,12 +26,12 @@ struct TransformedSurface: Surface {
   }
 }
 
-struct BlurTransformedSurface: Surface {
+struct KeyframedSurface: Surface {
   let surface: Surface
-  let from, to: Matrix4
+  let keyframes: TransformSteps
   
   func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection? {
-    let transformation = from.blend(to, rand(0, 1))
+    let transformation = keyframes.at(rand(ray.time.from, ray.time.to))
     if let intersection = surface.intersectsRay(
       Ray(
         point: transformation.inverse * ray.point,
@@ -43,7 +44,8 @@ struct BlurTransformedSurface: Surface {
       return Intersection(
         point: transformation * intersection.point,
         normal: transformation * intersection.normal,
-        material: intersection.material
+        material: intersection.material,
+        time: ray.time
       )
     } else {
       return nil

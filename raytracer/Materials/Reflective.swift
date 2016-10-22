@@ -13,7 +13,8 @@ struct Reflective: Absorber {
         r: tintColor.r * ray.color.r,
         g: tintColor.g * ray.color.g,
         b: tintColor.b * ray.color.b
-      )
+      ),
+      time: ray.time
     )
   }
 }

@@ -11,7 +11,7 @@ struct InfinitePlane: Surface {
   
   func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection? {
     if ray.direction.dot(normal) ~= 0 {
-      return Intersection(point: ray.point, normal: normal, material: material)
+      return Intersection(point: ray.point, normal: normal, material: material, time: ray.time)
     } else {
       let t = (anchor - ray.point).dot(normal) / ray.direction.dot(normal)
       
@@ -19,7 +19,8 @@ struct InfinitePlane: Surface {
         return Intersection(
           point: ray.point + ray.direction*t,
           normal: normal * (ray.direction.dot(normal) > 0 ? -1 : 1),
-          material: material
+          material: material,
+          time: ray.time
         )
       } else {
         return nil

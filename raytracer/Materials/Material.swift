@@ -1,4 +1,5 @@
 protocol Material {
+  // Returns scattered ray, and whether the ray has reached a light source
   func scatter(_ ray: Ray, _ intersection: Intersection) -> (Ray, Bool)
 }
 

@@ -24,13 +24,14 @@ struct Camera {
     self.focalDistance = focalDistance
   }
   
-  func rayAt(x: Scalar, y: Scalar) -> Ray {
+  func rayAt(x: Scalar, y: Scalar, time: TimeRange) -> Ray {
     let randomInLens = randomVectorInDisc()*aperture*0.5
     let offset = h*randomInLens.x + v*randomInLens.y
     return Ray(
       point: origin + offset,
       direction: (swCorner + (h*x) + (v*(1-y))) - origin - offset,
-      color: Color(0xFFFFFF)
+      color: Color(0xFFFFFF),
+      time: time
     )
   }
 }

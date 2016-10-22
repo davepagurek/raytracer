@@ -10,7 +10,8 @@ struct Diffuse: Absorber {
         r: reflectivity * (ray.color.r * color.r),
         g: reflectivity * (ray.color.g * color.g),
         b: reflectivity * (ray.color.b * color.b)
-      )
+      ),
+      time: ray.time
     )
   }
 }

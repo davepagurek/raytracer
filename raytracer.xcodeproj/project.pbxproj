@@ -22,6 +22,7 @@
 		AA5BD7F21DBB2EF7006B1843 /* SurfaceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5BD7ED1DBB2EF7006B1843 /* SurfaceList.swift */; };
 		AA5BD7F31DBB2EF7006B1843 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5BD7EE1DBB2EF7006B1843 /* Triangle.swift */; };
 		AA5BD7F71DBB300F006B1843 /* TransformedSurface.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5BD7F61DBB300F006B1843 /* TransformedSurface.swift */; };
+		AA5BD7FA1DBB41F7006B1843 /* TransformSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5BD7F91DBB41F7006B1843 /* TransformSteps.swift */; };
 		AA71E9C11DA2079E00838943 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA71E9C01DA2079E00838943 /* Background.swift */; };
 		AA7541B71D9F5F94009E314D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7541B61D9F5F94009E314D /* main.swift */; };
 		AA7541BF1D9F5FB3009E314D /* Transforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7541BD1D9F5FB3009E314D /* Transforms.swift */; };
@@ -57,10 +58,11 @@
 		AA5BD7ED1DBB2EF7006B1843 /* SurfaceList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SurfaceList.swift; path = Geometry/SurfaceList.swift; sourceTree = "<group>"; };
 		AA5BD7EE1DBB2EF7006B1843 /* Triangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Triangle.swift; path = Geometry/Triangle.swift; sourceTree = "<group>"; };
 		AA5BD7F61DBB300F006B1843 /* TransformedSurface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransformedSurface.swift; path = Geometry/TransformedSurface.swift; sourceTree = "<group>"; };
+		AA5BD7F91DBB41F7006B1843 /* TransformSteps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransformSteps.swift; path = Transformations/TransformSteps.swift; sourceTree = "<group>"; };
 		AA71E9C01DA2079E00838943 /* Background.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		AA7541B31D9F5F94009E314D /* raytracer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = raytracer; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA7541B61D9F5F94009E314D /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		AA7541BD1D9F5FB3009E314D /* Transforms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transforms.swift; sourceTree = "<group>"; };
+		AA7541BD1D9F5FB3009E314D /* Transforms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Transforms.swift; path = Transformations/Transforms.swift; sourceTree = "<group>"; };
 		AA7541BE1D9F5FB3009E314D /* VectorMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorMath.swift; sourceTree = "<group>"; };
 		AAB412991DAAC2D5001BF2FB /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,6 +103,15 @@
 			name = Materials;
 			sourceTree = "<group>";
 		};
+		AA5BD7F81DBB4190006B1843 /* Transformations */ = {
+			isa = PBXGroup;
+			children = (
+				AA7541BD1D9F5FB3009E314D /* Transforms.swift */,
+				AA5BD7F91DBB41F7006B1843 /* TransformSteps.swift */,
+			);
+			name = Transformations;
+			sourceTree = "<group>";
+		};
 		AA7541AA1D9F5F94009E314D = {
 			isa = PBXGroup;
 			children = (
@@ -120,11 +131,11 @@
 		AA7541B51D9F5F94009E314D /* raytracer */ = {
 			isa = PBXGroup;
 			children = (
+				AA5BD7F81DBB4190006B1843 /* Transformations */,
 				AA5BD7F41DBB2F33006B1843 /* Geometry */,
 				AA5BD7F51DBB2F43006B1843 /* Materials */,
 				AA7541B61D9F5F94009E314D /* main.swift */,
 				AA0DD9AD1DA0803100C398B6 /* Color.swift */,
-				AA7541BD1D9F5FB3009E314D /* Transforms.swift */,
 				AA0DD9AF1DA08CD700C398B6 /* Ray.swift */,
 				AAB412991DAAC2D5001BF2FB /* Camera.swift */,
 				AA71E9C01DA2079E00838943 /* Background.swift */,
@@ -202,6 +213,7 @@
 				AA5BD7F11DBB2EF7006B1843 /* Surface.swift in Sources */,
 				AA5BD7E71DBB2EF1006B1843 /* Material.swift in Sources */,
 				AA5BD7EF1DBB2EF7006B1843 /* InfinitePlane.swift in Sources */,
+				AA5BD7FA1DBB41F7006B1843 /* TransformSteps.swift in Sources */,
 				AA0DD9B41DA09E7700C398B6 /* helpers.swift in Sources */,
 				AA0DD9B01DA08CD700C398B6 /* Ray.swift in Sources */,
 				AA7541BF1D9F5FB3009E314D /* Transforms.swift in Sources */,

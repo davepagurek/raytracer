@@ -8,12 +8,13 @@ struct Raytracer {
   let surface: Surface
   let background: Background
   
-  func rays(w: Int, h: Int) -> [[Ray]] {
+  func rays(w: Int, h: Int, time: TimeRange) -> [[Ray]] {
     return (0..<h).map{ (y: Int) -> [Ray] in
       return (0..<w).map{ (x: Int) -> Ray in
         return camera.rayAt(
           x: Scalar(x)/Scalar(w-1),
-          y: Scalar(y)/Scalar(h-1)
+          y: Scalar(y)/Scalar(h-1),
+          time: time
         )
       }
     }
@@ -33,10 +34,10 @@ struct Raytracer {
     }
   }
   
-  func render(w: Int, h: Int, samples: Int = 1, callback: @escaping ([[Color]]) -> ()) {
+  func render(w: Int, h: Int, samples: Int = 1, time: TimeRange, callback: @escaping ([[Color]]) -> ()) {
     print("Running with \(samples) sample\(samples == 1 ? "" : "s")")
     return ([Int](1...samples)).concurrentMap(transform: { (sample: Int) -> [[Color]] in
-      let image = self.rays(w: w*2, h: h*2)
+      let image = self.rays(w: w*2, h: h*2, time: time)
         .mapGrid{ self.rayColor($0) }
         .blend()
       

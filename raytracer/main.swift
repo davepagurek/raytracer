@@ -43,14 +43,18 @@ Raytracer(
       radius: 0.5,
       material: Diffuse(color: Color(0x004358), reflectivity: 0.5)
     ),
-    BlurTransformedSurface(
+    KeyframedSurface(
       surface: Sphere(
         center: Point(x: -0.4, y: 0.8, z: -1.8),
         radius: 0.5,
         material: Diffuse(color: Color(0xBEDB39), reflectivity: 0.5)
       ),
-      from: Translate(x: 0, y: 0, z: 0),
-      to: Translate(x: 0, y: 0.5, z: 0.5)
+      keyframes: TransformSteps(
+        frames: [
+          0: Translate(x: 0, y: 0, z: 0),
+          1: Translate(x: 0, y: 0.5, z: 0.5)
+        ]
+      )
     ),
     Sphere(
       center: Point(x: 2, y: 0.5, z: -5),
@@ -81,7 +85,8 @@ Raytracer(
 ).render(
   w: 400,
   h: 200,
-  samples: 4
+  samples: 4,
+  time: TimeRange(from: 0, to: 0.5)
 ) { (image: [[Color]]) in
   writePNG(
     file: file,

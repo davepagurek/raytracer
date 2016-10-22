@@ -165,3 +165,19 @@ func randomVectorInDisc() -> Vector4 {
   let theta = rand(0, Scalar(M_PI*2))
   return Vector(x: r*cos(theta), y: r*sin(theta), z: 0)
 }
+
+func capHigh(_ n: Scalar, _ cap: Scalar) -> Scalar {
+  return n > cap ? cap : n
+}
+
+func capHigh(_ n: Int, _ cap: Int) -> Int {
+  return n > cap ? cap : n
+}
+
+func capLow(_ n: Scalar, _ cap: Scalar) -> Scalar {
+  return n < cap ? cap : n
+}
+
+func capLow(_ n: Int, _ cap: Int) -> Int {
+  return n < cap ? cap : n
+}

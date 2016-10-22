@@ -10,7 +10,8 @@ struct LightEmitter: Emitter {
         r: tintColor.r * ray.color.r * brightness,
         g: tintColor.g * ray.color.g * brightness,
         b: tintColor.b * ray.color.b * brightness
-      )
+      ),
+      time: ray.time
     )
   }
 }

@@ -1,8 +1,20 @@
 import Foundation
 
+struct TimeRange {
+  let from, to: Scalar
+}
+
 struct Ray {
   let point, direction: Vector4
   let color: Color
+  let time: TimeRange
+  
+  init(point: Vector4, direction: Vector4, color: Color, time: TimeRange = TimeRange(from:0, to:0)) {
+    self.point = point
+    self.direction = direction
+    self.color = color
+    self.time = time
+  }
   
   func pointAt(_ t: Scalar) -> Vector4 {
     return point + (direction * t)
@@ -21,5 +33,5 @@ struct Intersection {
   let point: Vector4
   let normal: Vector4
   let material: Material
-  let time: Scalar = 0
+  let time: TimeRange
 }

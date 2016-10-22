@@ -22,7 +22,8 @@ struct Sphere: Surface {
         return Intersection(
           point: point,
           normal: normalAt(point),
-          material: material
+          material: material,
+          time: ray.time
         )
       } else {
         return nil
