@@ -43,20 +43,27 @@ Raytracer(
       radius: 0.5,
       material: Diffuse(color: Color(0x004358), reflectivity: 0.5)
     ),
-    Sphere(
-      center: Point(x: -0.4, y: 0.8, z: -1.8),
-      radius: 0.5,
-      material: Diffuse(color: Color(0xBEDB39), reflectivity: 0.5)
+    BlurTransformedSurface(
+      surface: Sphere(
+        center: Point(x: -0.4, y: 0.8, z: -1.8),
+        radius: 0.5,
+        material: Diffuse(color: Color(0xBEDB39), reflectivity: 0.5)
+      ),
+      from: Translate(x: 0, y: 0, z: 0),
+      to: Translate(x: 0, y: 0.5, z: 0.5)
     ),
     Sphere(
       center: Point(x: 2, y: 0.5, z: -5),
       radius: 0.5,
       material: Diffuse(color: Color(0x1F8A70), reflectivity: 0.5)
     ),
-    Sphere(
-      center: Point(x: -0.5, y: 2.3, z: -7),
-      radius: 2.3,
-      material: Reflective(tintColor: Color(0xCCCCDD), fuzziness: 0)
+    TransformedSurface(
+      surface: Sphere(
+        center: Point(x: -0.5, y: 2.3, z: -7),
+        radius: 2.3,
+        material: Reflective(tintColor: Color(0xCCCCDD), fuzziness: 0)
+      ),
+      transformation: Translate(x: 2, y: 0, z: 0)
     ),
     InfinitePlane(
       anchor: Point(x: 0, y: 0, z: 0),
