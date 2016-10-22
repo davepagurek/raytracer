@@ -4,9 +4,9 @@ let file = "test.png"
 
 var waiting = true
 
-let origin = Point(x: 3, y: 1, z: 0)
-let focus = Point(x: 1, y: 0.3, z: -3)
-let aim = Point(x: 0, y: 0, z: -4)
+let origin = Point(x: 0, y: 3, z: 3)
+let focus = Point(x: 2, y: 1, z: -3)
+let aim = Point(x: 0, y: 1.3, z: -2)
 
 Raytracer(
   camera: Camera(
@@ -19,74 +19,62 @@ Raytracer(
     focalDistance: (focus - origin).length
   ),
   surface: SurfaceList(surfaces: [
-    Sphere(
-      center: Point(x: 0, y: 0.5, z: -3),
-      radius: 0.5,
-      material: Transparent(
-        tintColor: Color(0xDDDDDD),
-        refractionIndex: 1.5,
-        fuzziness: 0
-      )
-    ),
-    Sphere(
-      center: Point(x: -1, y: 1.8, z: -3),
-      radius: 0.3,
-      material: LightEmitter(tintColor: Color(0xFFE02A), brightness: 3)
-    ),
-    Sphere(
-      center: Point(x: 1, y: 0.3, z: -3),
-      radius: 0.3,
-      material: LightEmitter(tintColor: Color(0xFFE02A), brightness: 3)
-    ),
-    Sphere(
-      center: Point(x: 3, y: 0.75, z: -3),
-      radius: 0.5,
-      material: Diffuse(color: Color(0x004358), reflectivity: 0.5)
-    ),
+
+    // Bouncing ball
     KeyframedSurface(
       surface: Sphere(
-        center: Point(x: -0.4, y: 0.8, z: -1.8),
-        radius: 0.5,
-        material: Diffuse(color: Color(0xBEDB39), reflectivity: 0.5)
+        center: Point(x: -1.4, y: 1, z: -2),
+        radius: 1,
+        material: Diffuse(color: Color(0x911146), reflectivity: 0.7)
       ),
       keyframes: TransformSteps(
         frames: [
-          0: Translate(x: 0, y: 0, z: 0),
-          1: Translate(x: 0, y: 0.5, z: 0.5)
+          0: Translate(x: 0.2, y: 1.3, z: 0),
+          0.7: Translate(x: 0, y: 0, z: 0),
+          1: Translate(x: -0.15, y: 0.5, z: 0)
         ]
       )
     ),
-    Sphere(
-      center: Point(x: 2, y: 0.5, z: -5),
-      radius: 0.5,
-      material: Diffuse(color: Color(0x1F8A70), reflectivity: 0.5)
-    ),
-    TransformedSurface(
+    // Midair ball
+    KeyframedSurface(
       surface: Sphere(
-        center: Point(x: -0.5, y: 2.3, z: -7),
-        radius: 2.3,
-        material: Reflective(tintColor: Color(0xCCCCDD), fuzziness: 0)
+        center: Point(x: 1, y: 2, z: -4),
+        radius: 1,
+        material: Diffuse(color: Color(0xCF4A30), reflectivity: 0.7)
       ),
-      transformation: Translate(x: 2, y: 0, z: 0)
+      keyframes: TransformSteps(
+        frames: [
+          0: Translate(x: -0.1, y: 0, z: 0),
+          1: Translate(x: 0, y: 0.1, z: 0)
+        ]
+      )
     ),
+    // Still ball
+    KeyframedSurface(
+      surface: Sphere(
+        center: Point(x: 2, y: 1, z: -2.2),
+        radius: 1,
+        material: Diffuse(color: Color(0xED8C2B), reflectivity: 0.7)
+      ),
+      keyframes: TransformSteps(
+        frames: [
+          0: Translate(x: 0, y: 0, z: 0)
+        ]
+      )
+    ),
+    // Table
     InfinitePlane(
       anchor: Point(x: 0, y: 0, z: 0),
       normal: Vector(x: 0, y: 1, z: 0),
-      material: Reflective(tintColor: Color(0x666666), fuzziness: 0.5)
-    ),
-    Triangle(
-      a: Point(x: 2.5, y: 0, z: -2),
-      b: Point(x: 1.5, y: 0, z: -2),
-      c: Point(x: 2, y: 1, z: -2),
-      material: Diffuse(color: Color(0xFFFFFF), reflectivity: 0.3)
+      material: Diffuse(color: Color(0xA6CFCE), reflectivity: 0.5)
     )
   ]),
-  background: Sky(top: Color(0x8F86D9), bottom: Color(0x8348B0))
+  background: Sky(top: Color(0xFFFFFF), bottom: Color(0xA6D4E3))
 ).render(
-  w: 400,
-  h: 200,
-  samples: 4,
-  time: TimeRange(from: 0, to: 0.5)
+  w: 800,
+  h: 400,
+  samples: 36,
+  time: TimeRange(from: 0, to: 1)
 ) { (image: [[Color]]) in
   writePNG(
     file: file,
