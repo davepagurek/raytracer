@@ -43,3 +43,64 @@ struct Triangle: Surface {
     return nil
   }
 }
+
+// a, b, c, d in order
+func Rectangle(a: Vector4, b: Vector4, c: Vector4, d: Vector4, material: Material) -> Surface {
+  return SurfaceList(surfaces: [
+    Triangle(a: a, b: b, c: c, material: material),
+    Triangle(a: c, b: d, c: a, material: material)
+  ])
+}
+
+func RectPrism(location: Vector4, w: Scalar, h: Scalar, d: Scalar, material: Material) -> Surface {
+  return SurfaceList(surfaces: [
+    // front
+    Rectangle(
+      a: location + Point(x: -w/2, y: h/2, z: d/2),
+      b: location + Point(x: w/2, y: h/2, z: d/2),
+      c: location + Point(x: w/2, y: -h/2, z: d/2),
+      d: location + Point(x: -w/2, y: -h/2, z: d/2),
+      material: material
+    ),
+    // back
+    Rectangle(
+      a: location + Point(x: -w/2, y: h/2, z: -d/2),
+      b: location + Point(x: w/2, y: h/2, z: -d/2),
+      c: location + Point(x: w/2, y: -h/2, z: -d/2),
+      d: location + Point(x: -w/2, y: -h/2, z: -d/2),
+      material: material
+    ),
+    // right
+    Rectangle(
+      a: location + Point(x: w/2, y: h/2, z: -d/2),
+      b: location + Point(x: w/2, y: h/2, z: d/2),
+      c: location + Point(x: w/2, y: -h/2, z: d/2),
+      d: location + Point(x: w/2, y: -h/2, z: -d/2),
+      material: material
+    ),
+    // left
+    Rectangle(
+      a: location + Point(x: -w/2, y: h/2, z: -d/2),
+      b: location + Point(x: -w/2, y: h/2, z: d/2),
+      c: location + Point(x: -w/2, y: -h/2, z: d/2),
+      d: location + Point(x: -w/2, y: -h/2, z: -d/2),
+      material: material
+    ),
+    // top
+    Rectangle(
+      a: location + Point(x: w/2, y: -h/2, z: -d/2),
+      b: location + Point(x: w/2, y: -h/2, z: d/2),
+      c: location + Point(x: -w/2, y: -h/2, z: d/2),
+      d: location + Point(x: -w/2, y: -h/2, z: -d/2),
+      material: material
+    ),
+    // bottom
+    Rectangle(
+      a: location + Point(x: w/2, y: h/2, z: -d/2),
+      b: location + Point(x: w/2, y: h/2, z: d/2),
+      c: location + Point(x: -w/2, y: h/2, z: d/2),
+      d: location + Point(x: -w/2, y: h/2, z: -d/2),
+      material: material
+    )
+  ])
+}
