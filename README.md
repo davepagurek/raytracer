@@ -1,8 +1,6 @@
 # Raytracer
 
-This is me learning how graphics works. Yay, learning!
-
-It can only make balls right now, so here are some balls for you to look at:
+This is a Monte Carlo style 3d renderer (so the more samples you use, the closer to a perfect render it gets.) Here are some images I've rendered with it so far:
 
 <img src="https://github.com/davepagurek/raytracer/blob/master/samples/lights_on_plane.png?raw=true" />
 
