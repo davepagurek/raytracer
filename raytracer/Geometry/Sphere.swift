@@ -1,9 +1,16 @@
 import Foundation
 
-struct Sphere: Surface {
+struct Sphere: FiniteSurface {
   let center: Vector4
   let radius: Scalar
   let material: Material
+  
+  func boundingBox() -> BoundingBox {
+    return BoundingBox(
+      minCorner: center - Vector(x: radius, y: radius, z: radius),
+      maxCorner: center + Vector(x: radius, y: radius, z: radius)
+    )
+  }
   
   func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection? {
     // Quadratic formula

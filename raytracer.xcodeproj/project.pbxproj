@@ -28,6 +28,7 @@
 		AA7541BF1D9F5FB3009E314D /* Transforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7541BD1D9F5FB3009E314D /* Transforms.swift */; };
 		AA7541C01D9F5FB3009E314D /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7541BE1D9F5FB3009E314D /* VectorMath.swift */; };
 		AAB4129A1DAAC2D5001BF2FB /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB412991DAAC2D5001BF2FB /* Camera.swift */; };
+		D32694181DEFE53500213D48 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32694171DEFE53500213D48 /* BoundingBox.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -65,6 +66,7 @@
 		AA7541BD1D9F5FB3009E314D /* Transforms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Transforms.swift; path = Transformations/Transforms.swift; sourceTree = "<group>"; };
 		AA7541BE1D9F5FB3009E314D /* VectorMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorMath.swift; sourceTree = "<group>"; };
 		AAB412991DAAC2D5001BF2FB /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		D32694171DEFE53500213D48 /* BoundingBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoundingBox.swift; path = Geometry/BoundingBox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				AA5BD7EB1DBB2EF7006B1843 /* Sphere.swift */,
 				AA5BD7EC1DBB2EF7006B1843 /* Surface.swift */,
 				AA5BD7ED1DBB2EF7006B1843 /* SurfaceList.swift */,
+				D32694171DEFE53500213D48 /* BoundingBox.swift */,
 				AA5BD7EE1DBB2EF7006B1843 /* Triangle.swift */,
 				AA5BD7F61DBB300F006B1843 /* TransformedSurface.swift */,
 			);
@@ -207,6 +210,7 @@
 				AA5BD7E91DBB2EF1006B1843 /* Transparent.swift in Sources */,
 				AAB4129A1DAAC2D5001BF2FB /* Camera.swift in Sources */,
 				AA7541B71D9F5F94009E314D /* main.swift in Sources */,
+				D32694181DEFE53500213D48 /* BoundingBox.swift in Sources */,
 				AA5BD7F31DBB2EF7006B1843 /* Triangle.swift in Sources */,
 				AA5BD7E51DBB2EF1006B1843 /* Diffuse.swift in Sources */,
 				AA7541C01D9F5FB3009E314D /* VectorMath.swift in Sources */,

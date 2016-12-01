@@ -2,6 +2,10 @@ protocol Surface {
   func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection?
 }
 
+protocol FiniteSurface: Surface {
+  func boundingBox() -> BoundingBox
+}
+
 extension Surface {
   func intersectsRay(_ ray: Ray) -> Intersection? {
     return intersectsRay(ray, min: 0.0001, max: Scalar.infinity)

@@ -1,7 +1,9 @@
-struct Triangle: Surface {
+struct Triangle: FiniteSurface {
   let anchor: Vector4
   let normal, u, v: Vector4
   let material: Material
+  let box: BoundingBox
+  let sphere: BoundingSphere
   
   init(a: Vector4, b: Vector4, c: Vector4, material: Material) {
     anchor = a
@@ -10,9 +12,31 @@ struct Triangle: Surface {
     let n = u.xyz.cross(v.xyz)
     normal = Vector(x: n.x, y: n.y, z: n.z)
     self.material = material
+    
+    box = BoundingBox(
+      minCorner: Vector(
+        x: min(a.x, b.x, c.x),
+        y: min(a.y, b.y, c.y),
+        z: min(a.z, b.z, c.z)
+      ),
+      maxCorner: Vector(
+        x: max(a.x, b.x, c.x),
+        y: max(a.y, b.y, c.y),
+        z: max(a.z, b.z, c.z)
+      )
+    )
+    sphere = box.boundingSphere()
+  }
+  
+  func boundingBox() -> BoundingBox {
+    return box;
   }
   
   func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection? {
+    if !sphere.intersectsRay(ray, min: min, max: max) {
+      return nil
+    }
+    
     let pointOnPlane: Vector4?
     if ray.direction.dot(normal) ~= 0 {
       pointOnPlane = ray.point
@@ -45,14 +69,14 @@ struct Triangle: Surface {
 }
 
 // a, b, c, d in order
-func Rectangle(a: Vector4, b: Vector4, c: Vector4, d: Vector4, material: Material) -> Surface {
+func Rectangle(a: Vector4, b: Vector4, c: Vector4, d: Vector4, material: Material) -> FiniteSurface {
   return SurfaceList(surfaces: [
     Triangle(a: a, b: b, c: c, material: material),
     Triangle(a: c, b: d, c: a, material: material)
   ])
 }
 
-func RectPrism(location: Vector4, w: Scalar, h: Scalar, d: Scalar, material: Material) -> Surface {
+func RectPrism(location: Vector4, w: Scalar, h: Scalar, d: Scalar, material: Material) -> FiniteSurface {
   return SurfaceList(surfaces: [
     // front
     Rectangle(
