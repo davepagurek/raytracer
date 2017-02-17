@@ -37,15 +37,32 @@ struct Raytracer {
   func render(w: Int, h: Int, samples: Int = 1, time: TimeRange, callback: @escaping ([[Color]]) -> ()) {
     print("Running with \(samples) sample\(samples == 1 ? "" : "s")")
     return ([Int](1...samples)).concurrentMap(transform: { (sample: Int) -> [[Color]] in
-      let image = self.rays(w: w*2, h: h*2, time: time)
+      let image = self.rays(w: w, h: h, time: time)
         .mapGrid{ self.rayColor($0) }
+      
+      let edges = image
+        .gaussianBlurred()
+        .addColorsFrom(image.mapColors{$0.scale(-1)})
+        .mapColors({$0.scale(5).clipped()})
+      
+      let antialiased = self.rays(w: w*2, h: h*2, time: time)
+        .mapGridWithIndex { (ray: Ray, y: Int, x: Int) -> Color in
+          let sourceX = (x/2) // Ints round down by default
+          let sourceY = (y/2)
+          
+          if edges[sourceY][sourceX].brightness() < 0.2 {
+            return image[sourceY][sourceX]
+          } else {
+            return self.rayColor(ray)
+          }
+        }
         .blend()
       
       let thread = Thread.current
       let threadNumber = thread.value(forKeyPath: "private.seqNum") ?? 0
       print("Finished sample \(sample) in thread \(threadNumber)")
       
-      return image
+      return antialiased
       
     }, callback: { (images: [[[Color]]]) in
         callback(images.average().adjustGamma(0.5))

@@ -22,3 +22,15 @@ This is a Monte Carlo style 3d renderer (so the more samples you use, the closer
   - Light emitter
 - Lens blur
 - Motion blur
+
+### Antialiasing
+Antialiasing works by first rendering an image, then applying a find edges filter, and then rerendering edge areas at a sub-pixel level.
+
+Here is a detail of the original depth image:
+<img src="https://github.com/davepagurek/raytracer/blob/master/samples/antialiasing/spheres_normal_detail.png" />
+
+Edges are found by subtracting a blurred version from the original:
+<img src="https://github.com/davepagurek/raytracer/blob/master/samples/antialiasing/spheres_edges_detail.png" />
+
+Then, those areas are rerendered at double the pixel density to smooth the edges:
+<img src="https://github.com/davepagurek/raytracer/blob/master/samples/antialiasing/sphered_antialiased_detail.png" />

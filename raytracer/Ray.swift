@@ -27,6 +27,14 @@ extension Collection where Iterator.Element == [Ray] {
       return row.map{mapFn($0)}
     }
   }
+  
+  func mapGridWithIndex<T>(_ mapFn: @escaping (Ray, Int, Int) -> T) -> [[T]] {
+    return self.enumerated().map{ (i: Int, row: [Ray]) -> [T] in
+      return row.enumerated().map{ (j: Int, ray: Ray) -> T in
+        return mapFn(ray, i, j)
+      }
+    }
+  }
 }
 
 struct Intersection {

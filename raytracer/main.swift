@@ -4,83 +4,76 @@ let file = "test.png"
 
 var waiting = true
 
-let origin = Point(x: 3, y: 2, z: 3)
-let focus = Point(x: 0, y: 2.5, z: -2)
-let aim = Point(x: 2, y: 3, z: -2)
+let origin = Point(x: 3, y: 1, z: 0)
+let focus = Point(x: 1, y: 0.3, z: -3)
+let aim = Point(x: 0, y: 0, z: -4)
 
 Raytracer(
   camera: Camera(
     from: origin,
     to: aim,
     up: Vector(x: 0, y: 1, z: 0),
-    vfov: 35,
+    vfov: 50,
     aspect: 2,
-    aperture: 0.04,
+    aperture: 0.003,
     focalDistance: (focus - origin).length
   ),
   surface: UnboundedSurfaceList(surfaces: [
     
-    SurfaceList(surfaces: [
-      // Moon
+    UnboundedSurfaceList(surfaces: [
       Sphere(
-        center: Point(x: 2, y: 5, z: -10),
-        radius: 1.3,
-        material: LightEmitter(tintColor: Color(0xE8E7CF), brightness: 3)
-      ),
-
-      // Buildings
-      RectPrism(
-        location: Point(x: 0, y: 2.5, z: -2),
-        w: 1, h: 5, d: 1,
-        material: Diffuse(color: Color(0x183E96), reflectivity: 0.5)
-      ),
-      RectPrism(
-        location: Point(x: -1.5, y: 1.5, z: -2.5),
-        w: 0.8, h: 3, d: 0.8,
-        material: Diffuse(color: Color(0x183E96), reflectivity: 0.5)
-      ),
-      RectPrism(
-        location: Point(x: -1, y: 2, z: -3.5),
-        w: 0.8, h: 4, d: 0.8,
-        material: Diffuse(color: Color(0x061C45), reflectivity: 0.5)
-      ),
-      RectPrism(
-        location: Point(x: 2, y: 1.5, z: -3),
-        w: 0.8, h: 3, d: 0.8,
-        material: Diffuse(color: Color(0x061C45), reflectivity: 0.5)
-      ),
-      RectPrism(
-        location: Point(x: 1, y: 2.5, z: -4),
-        w: 1, h: 5, d: 1,
-        material: Diffuse(color: Color(0x082E86), reflectivity: 0.5)
-      ),
-      SurfaceList(surfaces: (1...10).map{_ in
-        let height = rand(2, 5)
-        let width = rand(0.5, 0.8)
-        return RectPrism(
-          location: Point(x: rand(0.5, 8), y: height/2, z: rand(-3, -6)),
-          w: width, h: height, d: width,
-          material: Diffuse(
-            color: lerpColor(Color(0x183E96), Color(0x061C45), rand(0,1)),
-            reflectivity: 0.5
-          )
+        center: Point(x: 0, y: 0.5, z: -3),
+        radius: 0.5,
+        material: Transparent(
+          tintColor: Color(0xDDDDDD),
+          refractionIndex: 1.5,
+          fuzziness: 0
         )
-      }),
+      ),
+//      Sphere(
+//        center: Point(x: -1, y: 1.8, z: -3),
+//        radius: 0.3,
+//        material: LightEmitter(tintColor: Color(0xFFE02A), brightness: 3)
+//      ),
+//      Sphere(
+//        center: Point(x: 1, y: 0.3, z: -3),
+//        radius: 0.3,
+//        material: LightEmitter(tintColor: Color(0xFFE02A), brightness: 3)
+//      ),
+      Sphere(
+        center: Point(x: 3, y: 0.75, z: -3),
+        radius: 0.5,
+        material: Diffuse(color: Color(0x004358), reflectivity: 0.5)
+      ),
+      Sphere(
+        center: Point(x: -0.4, y: 0.8, z: -1.8),
+        radius: 0.5,
+        material: Diffuse(color: Color(0xBEDB39), reflectivity: 0.5)
+      ),
+      Sphere(
+        center: Point(x: 2, y: 0.5, z: -5),
+        radius: 0.5,
+        material: Diffuse(color: Color(0x1F8A70), reflectivity: 0.5)
+      ),
+      Sphere(
+        center: Point(x: -0.5, y: 2.3, z: -7),
+        radius: 2.3,
+        material: Reflective(tintColor: Color(0xCCCCDD), fuzziness: 0)
+      )
     ]),
 
     
-    // Water
     InfinitePlane(
       anchor: Point(x: 0, y: 0, z: 0),
       normal: Vector(x: 0, y: 1, z: 0),
-      material: Reflective(tintColor: Color(0x428D96), fuzziness: 0.4)
+      material: Diffuse(color: Color(0xBBBBBB), reflectivity: 0.5)
     )
   ]),
-  background: Sky(top: Color(0x063380), bottom: Color(0xED9B0C))
+  background: Sky(top: Color(0xBBBBBB), bottom: Color(0x8348B0))
 ).render(
-  w: 200,
-  h: 100,
-  samples: 8,
+  w: 400,
+  h: 200,
+  samples: 12,
   time: TimeRange(from: 0, to: 1)
 ) { (image: [[Color]]) in
   writePNG(

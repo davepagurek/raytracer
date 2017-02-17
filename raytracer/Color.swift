@@ -13,6 +13,30 @@ extension Color {
     )
   }
   
+  func add(_ other: Color) -> Color {
+    return Color(
+      r: r + other.r,
+      g: g + other.g,
+      b: b + other.b
+    )
+  }
+  
+  func scale(_ factor: Scalar) -> Color {
+    return Color(
+      r: r * factor,
+      g: g * factor,
+      b: b * factor
+    )
+  }
+  
+  func clipped() -> Color {
+    return Color(
+      r: clip(r, 0, 1),
+      g: clip(g, 0, 1),
+      b: clip(b, 0, 1)
+    )
+  }
+  
   func brightness() -> Scalar {
     return (r + g + b)/3
   }
@@ -33,6 +57,46 @@ extension Collection where Iterator.Element == [Color] {
         return mapFn(color)
       }
     }
+  }
+  
+  func mapColorsWithIndex(_ mapFn: (Color, Int, Int) -> Color) -> [[Color]] {
+    return self.enumerated().map{ (y: Int, row: [Color]) -> [Color] in
+      return row.enumerated().map{ (x: Int, color: Color) -> Color in
+        return mapFn(color, x, y)
+      }
+    }
+  }
+  
+  func withFilter(_ filter: Matrix3) -> [[Color]] {
+    let scales = filter.to2DArray()
+    
+    return self.mapColorsWithIndex{ (color: Color, x: Int, y: Int) in
+      return [-1, 0, 1].reduce(Color(0x000000)) { (result: Color, xOff: Int) in
+        return [-1, 0, 1].reduce(result) { (result: Color, yOff: Int) in
+          let sourceX, sourceY: Int
+          if x+xOff < 0 || x + xOff >= self.first?.count ?? 0 {
+            sourceX = x
+          } else {
+            sourceX = x + xOff
+          }
+          if y+yOff < 0 || y + yOff >= self.count as! Int {
+            sourceY = y
+          } else {
+            sourceY = y + yOff
+          }
+          
+          return result.add(self[sourceY as! Self.Index][sourceX].scale(scales[yOff+1][xOff+1]))
+        }
+      }
+    }
+  }
+  
+  func gaussianBlurred() -> [[Color]] {
+    return self.withFilter(Matrix3(
+      0.01, 0.08, 0.01,
+      0.08, 0.64, 0.08,
+      0.01, 0.08, 0.01
+    ))
   }
   
   func adjustGamma(_ gamma: Float) -> [[Color]] {
