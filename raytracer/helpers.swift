@@ -109,10 +109,10 @@ extension Array {
   }
   
   func concurrentMap<U>(transform: @escaping (Element) -> U, callback: @escaping (Array<U>) -> ()) {
-    let queue = DispatchQueue.global(qos: DispatchQoS.QoSClass.utility)
+    let queue = DispatchQueue(label: "concurrentMap", attributes: .concurrent)
     let group = DispatchGroup()
     
-    let sync = DispatchQueue.global(qos: DispatchQoS.QoSClass.utility)
+    let sync = DispatchQueue(label: "concurrentMapSync")
 
     var results = Array<U?>(repeating:nil, count: self.count)
     
@@ -125,9 +125,8 @@ extension Array {
       }
     }
     
-    group.notify(queue: sync) {
-      callback(results.map{$0!})
-    }
+    group.wait()
+    callback(results.map{$0!})
   }
 }
 

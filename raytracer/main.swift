@@ -2,8 +2,6 @@ import Foundation
 
 let file = "test.png"
 
-var waiting = true
-
 let origin = Point(x: 3, y: 1, z: 0)
 let focus = Point(x: 1, y: 0.3, z: -3)
 let aim = Point(x: 0, y: 0, z: -4)
@@ -71,8 +69,8 @@ Raytracer(
   ]),
   background: Sky(top: Color(0xBBBBBB), bottom: Color(0x8348B0))
 ).render(
-  w: 400,
-  h: 200,
+  w: 200,
+  h: 100,
   samples: 12,
   time: TimeRange(from: 0, to: 1)
 ) { (image: [[Color]]) in
@@ -84,8 +82,4 @@ Raytracer(
   let _ = shell("open", file)
 
   print("Done!")
-  
-  waiting = false
 }
-
-while waiting { }
