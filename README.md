@@ -8,6 +8,8 @@ This is a Monte Carlo style 3d renderer (so the more samples you use, the closer
 
 <img src="https://github.com/davepagurek/raytracer/blob/master/samples/prisms.png?raw=true" />
 
+<img src="https://github.com/davepagurek/raytracer/blob/master/samples/volume.png?raw=true" />
+
 ## Features
 - Shapes
   - Sphere
@@ -15,6 +17,7 @@ This is a Monte Carlo style 3d renderer (so the more samples you use, the closer
   - Triangle
     - Rectangle
     - Rectangular prism
+  - Volumes of any other shape
 - Materials
   - Diffuse
   - Reflective

@@ -23,9 +23,18 @@ struct Sphere: FiniteSurface {
       return nil
     } else {
       let t = (-b - sqrt(descriminant)) / (2*a)
+      let t2 = (-b + sqrt(descriminant)) / (2*a)
       
       if t >= min && t <= max {
         let point = ray.pointAt(t)
+        return Intersection(
+          point: point,
+          normal: normalAt(point),
+          material: material,
+          time: ray.time
+        )
+      } else if t2 >= min && t <= max {
+        let point = ray.pointAt(t2)
         return Intersection(
           point: point,
           normal: normalAt(point),
