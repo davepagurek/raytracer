@@ -38,10 +38,13 @@ Raytracer(
 //        radius: 0.3,
 //        material: LightEmitter(tintColor: Color(0xFFE02A), brightness: 3)
 //      ),
-      Sphere(
-        center: Point(x: 3, y: 0.75, z: -3),
-        radius: 0.5,
-        material: Diffuse(color: Color(0x004358), reflectivity: 0.5)
+      Volume(
+        surface: Sphere(
+          center: Point(x: 3, y: 0.75, z: -3),
+          radius: 0.7,
+          material: Diffuse(color: Color(0xEEEEEE), reflectivity: 0.5)
+        ),
+        density: 1.5
       ),
       Sphere(
         center: Point(x: -0.4, y: 0.8, z: -1.8),
@@ -71,7 +74,7 @@ Raytracer(
 ).render(
   w: 200,
   h: 100,
-  samples: 12,
+  samples: 48,
   time: TimeRange(from: 0, to: 1)
 ) { (image: [[Color]]) in
   writePNG(

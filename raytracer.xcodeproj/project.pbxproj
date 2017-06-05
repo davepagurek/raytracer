@@ -29,6 +29,7 @@
 		AA7541C01D9F5FB3009E314D /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7541BE1D9F5FB3009E314D /* VectorMath.swift */; };
 		AAB4129A1DAAC2D5001BF2FB /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB412991DAAC2D5001BF2FB /* Camera.swift */; };
 		D32694181DEFE53500213D48 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32694171DEFE53500213D48 /* BoundingBox.swift */; };
+		D39BB5821EE1058A008ECA32 /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39BB5811EE1058A008ECA32 /* Volume.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -67,6 +68,7 @@
 		AA7541BE1D9F5FB3009E314D /* VectorMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorMath.swift; sourceTree = "<group>"; };
 		AAB412991DAAC2D5001BF2FB /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		D32694171DEFE53500213D48 /* BoundingBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoundingBox.swift; path = Geometry/BoundingBox.swift; sourceTree = "<group>"; };
+		D39BB5811EE1058A008ECA32 /* Volume.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Volume.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				D32694171DEFE53500213D48 /* BoundingBox.swift */,
 				AA5BD7EE1DBB2EF7006B1843 /* Triangle.swift */,
 				AA5BD7F61DBB300F006B1843 /* TransformedSurface.swift */,
+				D39BB5811EE1058A008ECA32 /* Volume.swift */,
 			);
 			name = Geometry;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				AA5BD7FA1DBB41F7006B1843 /* TransformSteps.swift in Sources */,
 				AA0DD9B41DA09E7700C398B6 /* helpers.swift in Sources */,
 				AA0DD9B01DA08CD700C398B6 /* Ray.swift in Sources */,
+				D39BB5821EE1058A008ECA32 /* Volume.swift in Sources */,
 				AA7541BF1D9F5FB3009E314D /* Transforms.swift in Sources */,
 				AA52EE211D9F7668006C460F /* Raytracer.swift in Sources */,
 				AA71E9C11DA2079E00838943 /* Background.swift in Sources */,
