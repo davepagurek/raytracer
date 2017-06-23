@@ -1,6 +1,6 @@
 import Foundation
 
-struct Sphere: FiniteSurface {
+struct Sphere: ContainedSurface {
   let center: Vector4
   let radius: Scalar
   let material: Material
@@ -10,6 +10,10 @@ struct Sphere: FiniteSurface {
       minCorner: center - Vector(x: radius, y: radius, z: radius),
       maxCorner: center + Vector(x: radius, y: radius, z: radius)
     )
+  }
+  
+  func containsPoint(_ point: Vector4) -> Bool {
+    return (point - center).lengthSquared < radius*radius
   }
   
   func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection? {

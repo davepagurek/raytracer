@@ -28,8 +28,10 @@
 		AA7541BF1D9F5FB3009E314D /* Transforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7541BD1D9F5FB3009E314D /* Transforms.swift */; };
 		AA7541C01D9F5FB3009E314D /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7541BE1D9F5FB3009E314D /* VectorMath.swift */; };
 		AAB4129A1DAAC2D5001BF2FB /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB412991DAAC2D5001BF2FB /* Camera.swift */; };
+		D30DEF921EF581D000C9D462 /* RandomScatterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30DEF911EF581D000C9D462 /* RandomScatterer.swift */; };
 		D32694181DEFE53500213D48 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32694171DEFE53500213D48 /* BoundingBox.swift */; };
-		D39BB5821EE1058A008ECA32 /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39BB5811EE1058A008ECA32 /* Volume.swift */; };
+		D3A120661EFCA4AC00C7CC3F /* Blurrer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A120651EFCA4AC00C7CC3F /* Blurrer.swift */; };
+		D3A120681EFCC50700C7CC3F /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A120671EFCC50700C7CC3F /* Volume.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -67,8 +69,10 @@
 		AA7541BD1D9F5FB3009E314D /* Transforms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Transforms.swift; path = Transformations/Transforms.swift; sourceTree = "<group>"; };
 		AA7541BE1D9F5FB3009E314D /* VectorMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorMath.swift; sourceTree = "<group>"; };
 		AAB412991DAAC2D5001BF2FB /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		D30DEF911EF581D000C9D462 /* RandomScatterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RandomScatterer.swift; path = Materials/RandomScatterer.swift; sourceTree = "<group>"; };
 		D32694171DEFE53500213D48 /* BoundingBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoundingBox.swift; path = Geometry/BoundingBox.swift; sourceTree = "<group>"; };
-		D39BB5811EE1058A008ECA32 /* Volume.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Volume.swift; sourceTree = "<group>"; };
+		D3A120651EFCA4AC00C7CC3F /* Blurrer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Blurrer.swift; path = Materials/Blurrer.swift; sourceTree = "<group>"; };
+		D3A120671EFCC50700C7CC3F /* Volume.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Volume.swift; path = Geometry/Volume.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +96,7 @@
 				D32694171DEFE53500213D48 /* BoundingBox.swift */,
 				AA5BD7EE1DBB2EF7006B1843 /* Triangle.swift */,
 				AA5BD7F61DBB300F006B1843 /* TransformedSurface.swift */,
-				D39BB5811EE1058A008ECA32 /* Volume.swift */,
+				D3A120671EFCC50700C7CC3F /* Volume.swift */,
 			);
 			name = Geometry;
 			sourceTree = "<group>";
@@ -105,6 +109,8 @@
 				AA5BD7E21DBB2EF1006B1843 /* Material.swift */,
 				AA5BD7E31DBB2EF1006B1843 /* Reflective.swift */,
 				AA5BD7E41DBB2EF1006B1843 /* Transparent.swift */,
+				D30DEF911EF581D000C9D462 /* RandomScatterer.swift */,
+				D3A120651EFCA4AC00C7CC3F /* Blurrer.swift */,
 			);
 			name = Materials;
 			sourceTree = "<group>";
@@ -219,11 +225,12 @@
 				AA7541C01D9F5FB3009E314D /* VectorMath.swift in Sources */,
 				AA5BD7F11DBB2EF7006B1843 /* Surface.swift in Sources */,
 				AA5BD7E71DBB2EF1006B1843 /* Material.swift in Sources */,
+				D3A120661EFCA4AC00C7CC3F /* Blurrer.swift in Sources */,
+				D3A120681EFCC50700C7CC3F /* Volume.swift in Sources */,
 				AA5BD7EF1DBB2EF7006B1843 /* InfinitePlane.swift in Sources */,
 				AA5BD7FA1DBB41F7006B1843 /* TransformSteps.swift in Sources */,
 				AA0DD9B41DA09E7700C398B6 /* helpers.swift in Sources */,
 				AA0DD9B01DA08CD700C398B6 /* Ray.swift in Sources */,
-				D39BB5821EE1058A008ECA32 /* Volume.swift in Sources */,
 				AA7541BF1D9F5FB3009E314D /* Transforms.swift in Sources */,
 				AA52EE211D9F7668006C460F /* Raytracer.swift in Sources */,
 				AA71E9C11DA2079E00838943 /* Background.swift in Sources */,
@@ -232,6 +239,7 @@
 				AA5BD7F21DBB2EF7006B1843 /* SurfaceList.swift in Sources */,
 				AA5BD7F71DBB300F006B1843 /* TransformedSurface.swift in Sources */,
 				AA5BD7F01DBB2EF7006B1843 /* Sphere.swift in Sources */,
+				D30DEF921EF581D000C9D462 /* RandomScatterer.swift in Sources */,
 				AA5BD7E61DBB2EF1006B1843 /* LightEmitter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
