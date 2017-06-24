@@ -44,23 +44,13 @@ Raytracer(
           radius: 0.7,
           material: Diffuse(color: Color(0xffe9dd), reflectivity: 0.6)
         ),
-        subsurface: SubsurfaceMaterial(
-          density: 500,
-          color: Color(0xFFFFFF),
-          bounceFn: {(incoming: Vector4, normal: Vector4) in
-            return normal
-//            if incoming.dot(normal) < 0 {
-//              return (incoming.reflectAround(normal) + randomVector()*0).normalized()
-//            } else {
-//              return incoming
-//            }
-          }
-        )
+        density: 1.3,
+        color: Color(0xFFFFFF)
       ),
       Sphere(
-        center: Point(x: 5, y: 0.7, z: -5),
-        radius: 0.7,
-        material: LightEmitter(tintColor: Color(0xFAF56B), brightness: 3)
+        center: Point(x: 4.2, y: 0.9, z: -5),
+        radius: 0.9,
+        material: LightEmitter(tintColor: Color(0xFAF56B), brightness: 2)
       ),
       Sphere(
         center: Point(x: -0.4, y: 0.8, z: -1.8),
@@ -89,7 +79,7 @@ Raytracer(
 ).render(
   w: 400,
   h: 200,
-  samples: 10,
+  samples: 48,
   time: TimeRange(from: 0, to: 1)
 ) { (image: [[Color]]) in
   writePNG(

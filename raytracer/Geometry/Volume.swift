@@ -22,10 +22,10 @@ struct Volume: ContainedSurface {
     return object.normalAt(point)
   }
   
-  func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection? {
+  func intersectsRay(_ ray: Ray, min minimum: Scalar, max maximum: Scalar) -> Intersection? {
     let start, end: Intersection?
     if containsPoint(ray.point) {
-      end = object.intersectsRay(ray, min: min, max: max)
+      end = object.intersectsRay(ray, min: minimum, max: maximum)
       if let end = end {
         start = Intersection(
           point: ray.point,
@@ -37,7 +37,7 @@ struct Volume: ContainedSurface {
         return nil // intersection right on edge, perpendicular to normal
       }
     } else {
-      start = object.intersectsRay(ray, min: min, max: max)
+      start = object.intersectsRay(ray, min: minimum, max: maximum)
       if let start = start {
         if let skin = skin, rand(0, 1) <= skin.probability {
           return Intersection(
@@ -48,12 +48,12 @@ struct Volume: ContainedSurface {
           )
         } else {
           let nextRay = Ray(
-            point: start.point + ray.direction.normalized() * min,
+            point: start.point + ray.direction.normalized() * minimum,
             direction: ray.direction,
             color: ray.color,
             time: ray.time
           )
-          end = object.intersectsRay(nextRay, min: min, max: max)
+          end = object.intersectsRay(nextRay, min: minimum, max: maximum)
         }
       } else {
         end = nil
@@ -61,7 +61,7 @@ struct Volume: ContainedSurface {
     }
     if let start = start, let end = end {
       let path = end.point - start.point
-      let probabilityHitAnything = path.length * density
+      let probabilityHitAnything = min(path.length * density, 1)
       if rand(0, 1) < probabilityHitAnything {
         let randomProbability = rand(0, probabilityHitAnything)
         let bounceDistance = randomProbability / density

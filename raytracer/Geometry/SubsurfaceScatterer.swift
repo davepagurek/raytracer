@@ -6,7 +6,8 @@ struct SubsurfaceMaterial {
 
 struct SubsurfaceScatterer : ContainedSurface {
   let object: ContainedSurface
-  let subsurface: SubsurfaceMaterial
+  let density: Scalar
+  let color: Color
   
   func boundingBox() -> BoundingBox {
     return object.boundingBox()
@@ -20,10 +21,10 @@ struct SubsurfaceScatterer : ContainedSurface {
     return object.normalAt(point)
   }
   
-  func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection? {
-    if let start = object.intersectsRay(ray, min: min, max: max) {
+  func intersectsRay(_ ray: Ray, min minimum: Scalar, max maximum: Scalar) -> Intersection? {
+    if let start = object.intersectsRay(ray, min: minimum, max: maximum) {
       var nextRay: Ray = Ray(
-        point: start.point + ray.direction.normalized() * min,
+        point: start.point + ray.direction.normalized() * minimum,
         direction: ray.direction,
         color: ray.color,
         time: ray.time
@@ -31,23 +32,17 @@ struct SubsurfaceScatterer : ContainedSurface {
       var prevIntersection: Intersection = start
       
       while true {
-        if let end = object.intersectsRay(nextRay, min: min, max: max) {
+        if let end = object.intersectsRay(nextRay, min: minimum, max: maximum) {
           let path = end.point - nextRay.point
-          let probabilityHitAnything = path.length * subsurface.density
-//          if rand(0,1) > 0.9 {
-//            print(probabilityHitAnything)
-//          }
+          let probabilityHitAnything = min(path.length * density, 1)
           if rand(0, 1) < probabilityHitAnything {
             let randomProbability = rand(0, probabilityHitAnything)
-            let bounceDistance = randomProbability / subsurface.density
+            let bounceDistance = randomProbability / density
             let nextPoint = nextRay.point + path.normalized()*bounceDistance
             nextRay = Ray(
               point: nextPoint,
-              direction: subsurface.bounceFn(
-                nextRay.direction,
-                object.normalAt(nextPoint)
-              ),
-              color: nextRay.color.multiply(subsurface.color),
+              direction: randomVector(),
+              color: nextRay.color.multiply(color),
               time: nextRay.time
             )
             prevIntersection = end
