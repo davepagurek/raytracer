@@ -21,6 +21,14 @@ extension Color {
     )
   }
   
+  func multiply(_ other: Color) -> Color {
+    return Color(
+      r: r * other.r,
+      g: g * other.g,
+      b: b * other.b
+    )
+  }
+  
   func scale(_ factor: Scalar) -> Color {
     return Color(
       r: r * factor,

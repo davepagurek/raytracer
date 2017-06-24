@@ -6,22 +6,26 @@ struct Skin {
 }
 
 struct Volume: ContainedSurface {
-  let surface: ContainedSurface
+  let object: ContainedSurface
   let density: Scalar
   let skin: Skin?
   
   func boundingBox() -> BoundingBox {
-    return surface.boundingBox()
+    return object.boundingBox()
   }
   
   func containsPoint(_ point: Vector4) -> Bool {
-    return surface.containsPoint(point)
+    return object.containsPoint(point)
+  }
+  
+  func normalAt(_ point: Vector4) -> Vector4 {
+    return object.normalAt(point)
   }
   
   func intersectsRay(_ ray: Ray, min: Scalar, max: Scalar) -> Intersection? {
     let start, end: Intersection?
     if containsPoint(ray.point) {
-      end = surface.intersectsRay(ray, min: min, max: max)
+      end = object.intersectsRay(ray, min: min, max: max)
       if let end = end {
         start = Intersection(
           point: ray.point,
@@ -33,7 +37,7 @@ struct Volume: ContainedSurface {
         return nil // intersection right on edge, perpendicular to normal
       }
     } else {
-      start = surface.intersectsRay(ray, min: min, max: max)
+      start = object.intersectsRay(ray, min: min, max: max)
       if let start = start {
         if let skin = skin, rand(0, 1) <= skin.probability {
           return Intersection(
@@ -49,7 +53,7 @@ struct Volume: ContainedSurface {
             color: ray.color,
             time: ray.time
           )
-          end = surface.intersectsRay(nextRay, min: min, max: max)
+          end = object.intersectsRay(nextRay, min: min, max: max)
         }
       } else {
         end = nil

@@ -32,6 +32,7 @@
 		D32694181DEFE53500213D48 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32694171DEFE53500213D48 /* BoundingBox.swift */; };
 		D3A120661EFCA4AC00C7CC3F /* Blurrer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A120651EFCA4AC00C7CC3F /* Blurrer.swift */; };
 		D3A120681EFCC50700C7CC3F /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A120671EFCC50700C7CC3F /* Volume.swift */; };
+		D3A1206A1EFCC5AD00C7CC3F /* SubsurfaceScatterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A120691EFCC5AD00C7CC3F /* SubsurfaceScatterer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -73,6 +74,7 @@
 		D32694171DEFE53500213D48 /* BoundingBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoundingBox.swift; path = Geometry/BoundingBox.swift; sourceTree = "<group>"; };
 		D3A120651EFCA4AC00C7CC3F /* Blurrer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Blurrer.swift; path = Materials/Blurrer.swift; sourceTree = "<group>"; };
 		D3A120671EFCC50700C7CC3F /* Volume.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Volume.swift; path = Geometry/Volume.swift; sourceTree = "<group>"; };
+		D3A120691EFCC5AD00C7CC3F /* SubsurfaceScatterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubsurfaceScatterer.swift; path = Geometry/SubsurfaceScatterer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 				AA5BD7EE1DBB2EF7006B1843 /* Triangle.swift */,
 				AA5BD7F61DBB300F006B1843 /* TransformedSurface.swift */,
 				D3A120671EFCC50700C7CC3F /* Volume.swift */,
+				D3A120691EFCC5AD00C7CC3F /* SubsurfaceScatterer.swift */,
 			);
 			name = Geometry;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3A1206A1EFCC5AD00C7CC3F /* SubsurfaceScatterer.swift in Sources */,
 				AA5BD7E91DBB2EF1006B1843 /* Transparent.swift in Sources */,
 				AAB4129A1DAAC2D5001BF2FB /* Camera.swift in Sources */,
 				AA7541B71D9F5F94009E314D /* main.swift in Sources */,

@@ -8,6 +8,7 @@ protocol FiniteSurface: Surface {
 
 protocol ContainedSurface: FiniteSurface {
   func containsPoint(_ point: Vector4) -> Bool
+  func normalAt(_ point: Vector4) -> Vector4
 }
 
 extension Surface {

@@ -3,8 +3,8 @@ import Foundation
 let file = "test.png"
 
 let origin = Point(x: 3, y: 0.3, z: -1)
-let focus = Point(x: 3, y: 1.5, z: -3)
-let aim = Point(x: 2, y: 1.5, z: -4)
+let focus = Point(x: 3, y: 1.1, z: -3)
+let aim = Point(x: 2, y: 1.1, z: -4)
 
 Raytracer(
   camera: Camera(
@@ -13,17 +13,17 @@ Raytracer(
     up: Vector(x: 0, y: 1, z: 0),
     vfov: 50,
     aspect: 2,
-    aperture: 0.04,
+    aperture: 0.04, //0.04,
     focalDistance: (focus - origin).length
   ),
   surface: UnboundedSurfaceList(surfaces: [
     
     UnboundedSurfaceList(surfaces: [
       Sphere(
-        center: Point(x: 0, y: 0.5, z: -3),
+        center: Point(x: 1.5, y: 0.5, z: -3),
         radius: 0.5,
         material: Transparent(
-          tintColor: Color(0xDDDDDD),
+          tintColor: Color(0xFFFFFF),
           refractionIndex: 1.5,
           fuzziness: 0
         )
@@ -38,17 +38,29 @@ Raytracer(
 //        radius: 0.3,
 //        material: LightEmitter(tintColor: Color(0xFFE02A), brightness: 3)
 //      ),
-      Volume(
-        surface: Sphere(
+      SubsurfaceScatterer(
+        object: Sphere(
           center: Point(x: 3, y: 0.75, z: -3),
           radius: 0.7,
-          material: Blurrer(tintColor: Color(0x824105), fuzziness: 1)
+          material: Diffuse(color: Color(0xffe9dd), reflectivity: 0.6)
         ),
-        density: 1.7,
-        skin: Skin(
-          material: Diffuse(color: Color(0xffe9dd), reflectivity: 0.6),
-          probability: 0.8
+        subsurface: SubsurfaceMaterial(
+          density: 500,
+          color: Color(0xFFFFFF),
+          bounceFn: {(incoming: Vector4, normal: Vector4) in
+            return normal
+//            if incoming.dot(normal) < 0 {
+//              return (incoming.reflectAround(normal) + randomVector()*0).normalized()
+//            } else {
+//              return incoming
+//            }
+          }
         )
+      ),
+      Sphere(
+        center: Point(x: 5, y: 0.7, z: -5),
+        radius: 0.7,
+        material: LightEmitter(tintColor: Color(0xFAF56B), brightness: 3)
       ),
       Sphere(
         center: Point(x: -0.4, y: 0.8, z: -1.8),
@@ -73,11 +85,11 @@ Raytracer(
       material: Diffuse(color: Color(0xBBBBBB), reflectivity: 0.5)
     )
   ]),
-  background: Sky(top: Color(r: 2, g: 1.5, b: 1.5), bottom: Color(r: 1, g: 0.9, b: 0.9))
+  background: Sky(top: Color(r: 1, g: 1, b: 1), bottom: Color(r: 0.9, g: 0.7, b: 0.7))
 ).render(
   w: 400,
   h: 200,
-  samples: 24,
+  samples: 10,
   time: TimeRange(from: 0, to: 1)
 ) { (image: [[Color]]) in
   writePNG(
