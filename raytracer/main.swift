@@ -44,7 +44,7 @@ Raytracer(
           radius: 0.7,
           material: Diffuse(color: Color(0xffe9dd), reflectivity: 0.6)
         ),
-        density: 1.3,
+        density: 1,
         color: Color(0xFFFFFF)
       ),
       Sphere(
@@ -79,7 +79,7 @@ Raytracer(
 ).render(
   w: 400,
   h: 200,
-  samples: 48,
+  samples: 24,
   time: TimeRange(from: 0, to: 1)
 ) { (image: [[Color]]) in
   writePNG(

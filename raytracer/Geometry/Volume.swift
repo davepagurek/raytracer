@@ -61,12 +61,10 @@ struct Volume: ContainedSurface {
     }
     if let start = start, let end = end {
       let path = end.point - start.point
-      let probabilityHitAnything = min(path.length * density, 1)
-      if rand(0, 1) < probabilityHitAnything {
-        let randomProbability = rand(0, probabilityHitAnything)
-        let bounceDistance = randomProbability / density
+      let distanceTravelled = -log(rand(0,1)*density)
+      if distanceTravelled < path.length {
         return Intersection(
-          point: start.point + path.normalized()*bounceDistance,
+          point: start.point + path.normalized()*distanceTravelled,
           normal: ray.direction.normalized() * -1,
           material: start.material,
           time: start.time

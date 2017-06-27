@@ -1,3 +1,5 @@
+import Foundation
+
 struct SubsurfaceMaterial {
   let density: Scalar
   let color: Color
@@ -34,11 +36,9 @@ struct SubsurfaceScatterer : ContainedSurface {
       while true {
         if let end = object.intersectsRay(nextRay, min: minimum, max: maximum) {
           let path = end.point - nextRay.point
-          let probabilityHitAnything = min(path.length * density, 1)
-          if rand(0, 1) < probabilityHitAnything {
-            let randomProbability = rand(0, probabilityHitAnything)
-            let bounceDistance = randomProbability / density
-            let nextPoint = nextRay.point + path.normalized()*bounceDistance
+          let distanceTravelled = -log(rand(0,1)*density)
+          if distanceTravelled < path.length {
+            let nextPoint = nextRay.point + path.normalized()*distanceTravelled
             nextRay = Ray(
               point: nextPoint,
               direction: randomVector(),
