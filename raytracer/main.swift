@@ -77,9 +77,9 @@ Raytracer(
   ]),
   background: Sky(top: Color(r: 1, g: 1, b: 1), bottom: Color(r: 0.9, g: 0.7, b: 0.7))
 ).render(
-  w: 800,
-  h: 400,
-  samples: 48,
+  w: 400,
+  h: 200,
+  samples: 12,
   time: TimeRange(from: 0, to: 1)
 ) { (image: [[Color]]) in
   writePNG(
