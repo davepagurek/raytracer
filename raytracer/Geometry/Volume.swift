@@ -61,7 +61,7 @@ struct Volume: ContainedSurface {
     }
     if let start = start, let end = end {
       let path = end.point - start.point
-      let distanceTravelled = -log(rand(0,1)*density)
+      let distanceTravelled = -log(rand(0,1))/density
       if distanceTravelled < path.length {
         return Intersection(
           point: start.point + path.normalized()*distanceTravelled,

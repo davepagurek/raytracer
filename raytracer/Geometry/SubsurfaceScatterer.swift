@@ -36,7 +36,7 @@ struct SubsurfaceScatterer : ContainedSurface {
       while true {
         if let end = object.intersectsRay(nextRay, min: minimum, max: maximum) {
           let path = end.point - nextRay.point
-          let distanceTravelled = -log(rand(0,1)*density)
+          let distanceTravelled = -log(rand(0,1))/density
           if distanceTravelled < path.length {
             let nextPoint = nextRay.point + path.normalized()*distanceTravelled
             nextRay = Ray(
