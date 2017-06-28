@@ -10,6 +10,8 @@ This is a Monte Carlo style 3d renderer (so the more samples you use, the closer
 
 <img src="https://github.com/davepagurek/raytracer/blob/master/samples/volume.png?raw=true" />
 
+<img src="https://github.com/davepagurek/raytracer/blob/master/samples/subsurface_scattering.png?raw=true" />
+
 ## Features
 - Shapes
   - Sphere
@@ -23,6 +25,8 @@ This is a Monte Carlo style 3d renderer (so the more samples you use, the closer
   - Reflective
   - Refractive
   - Light emitter
+  - Volumes
+  - Subsurface Scattering
 - Lens blur
 - Motion blur
 

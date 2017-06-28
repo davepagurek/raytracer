@@ -2,9 +2,9 @@ import Foundation
 
 let file = "test.png"
 
-let origin = Point(x: 3, y: 1, z: 0)
-let focus = Point(x: 1, y: 0.3, z: -3)
-let aim = Point(x: 0, y: 0, z: -4)
+let origin = Point(x: 1, y: 0.3, z: -1)
+let focus = Point(x: 3, y: 1.1, z: -3)
+let aim = Point(x: 2, y: 1.1, z: -4)
 
 Raytracer(
   camera: Camera(
@@ -13,17 +13,17 @@ Raytracer(
     up: Vector(x: 0, y: 1, z: 0),
     vfov: 50,
     aspect: 2,
-    aperture: 0.003,
+    aperture: 0.05,
     focalDistance: (focus - origin).length
   ),
   surface: UnboundedSurfaceList(surfaces: [
     
     UnboundedSurfaceList(surfaces: [
       Sphere(
-        center: Point(x: 0, y: 0.5, z: -3),
+        center: Point(x: 1.5, y: 0.5, z: -3),
         radius: 0.5,
         material: Transparent(
-          tintColor: Color(0xDDDDDD),
+          tintColor: Color(0xFFFFFF),
           refractionIndex: 1.5,
           fuzziness: 0
         )
@@ -38,13 +38,19 @@ Raytracer(
 //        radius: 0.3,
 //        material: LightEmitter(tintColor: Color(0xFFE02A), brightness: 3)
 //      ),
-      Volume(
-        surface: Sphere(
+      SubsurfaceScatterer(
+        object: Sphere(
           center: Point(x: 3, y: 0.75, z: -3),
           radius: 0.7,
-          material: Diffuse(color: Color(0xEEEEEE), reflectivity: 0.5)
+          material: Diffuse(color: Color(0xffe9dd), reflectivity: 0.6)
         ),
-        density: 1.5
+        density: 1,
+        color: Color(0xFFFFFF)
+      ),
+      Sphere(
+        center: Point(x: 4.2, y: 0.9, z: -5),
+        radius: 0.9,
+        material: LightEmitter(tintColor: Color(0xFAF56B), brightness: 2)
       ),
       Sphere(
         center: Point(x: -0.4, y: 0.8, z: -1.8),
@@ -62,7 +68,6 @@ Raytracer(
         material: Reflective(tintColor: Color(0xCCCCDD), fuzziness: 0)
       )
     ]),
-
     
     InfinitePlane(
       anchor: Point(x: 0, y: 0, z: 0),
@@ -70,10 +75,10 @@ Raytracer(
       material: Diffuse(color: Color(0xBBBBBB), reflectivity: 0.5)
     )
   ]),
-  background: Sky(top: Color(0xBBBBBB), bottom: Color(0x8348B0))
+  background: Sky(top: Color(r: 1, g: 1, b: 1), bottom: Color(r: 0.9, g: 0.7, b: 0.7))
 ).render(
-  w: 200,
-  h: 100,
+  w: 800,
+  h: 400,
   samples: 48,
   time: TimeRange(from: 0, to: 1)
 ) { (image: [[Color]]) in
