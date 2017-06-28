@@ -2,7 +2,7 @@ import Foundation
 
 let file = "test.png"
 
-let origin = Point(x: 3, y: 0.3, z: -1)
+let origin = Point(x: 1, y: 0.3, z: -1)
 let focus = Point(x: 3, y: 1.1, z: -3)
 let aim = Point(x: 2, y: 1.1, z: -4)
 
@@ -13,7 +13,7 @@ Raytracer(
     up: Vector(x: 0, y: 1, z: 0),
     vfov: 50,
     aspect: 2,
-    aperture: 0.04, //0.04,
+    aperture: 0.05,
     focalDistance: (focus - origin).length
   ),
   surface: UnboundedSurfaceList(surfaces: [
@@ -77,9 +77,9 @@ Raytracer(
   ]),
   background: Sky(top: Color(r: 1, g: 1, b: 1), bottom: Color(r: 0.9, g: 0.7, b: 0.7))
 ).render(
-  w: 400,
-  h: 200,
-  samples: 24,
+  w: 800,
+  h: 400,
+  samples: 48,
   time: TimeRange(from: 0, to: 1)
 ) { (image: [[Color]]) in
   writePNG(
