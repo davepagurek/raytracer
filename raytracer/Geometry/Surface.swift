@@ -18,7 +18,7 @@ extension Surface {
   
   func bounce(_ ray: Ray) -> (Ray, Bool)? {
     if let intersection = intersectsRay(ray) {
-      return intersection.material.scatter(ray, intersection)
+      return intersection.material.scatter(intersection)
     }
     return nil
   }

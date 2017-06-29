@@ -27,8 +27,8 @@ struct Transparent: Absorber {
     return rand(0,1) >= probability
   }
   
-  func scatter(_ ray: Ray, _ intersection: Intersection) -> Ray {
-    let i = ray.direction.normalized()
+  func scatter(_ intersection: Intersection) -> Ray {
+    let i = intersection.ray.direction.normalized()
     let normal = intersection.normal.normalized()
     
     let ratio: Scalar
@@ -48,12 +48,8 @@ struct Transparent: Absorber {
       point: intersection.point,
       direction: bounced
         + (randomVector() * fuzziness),
-      color: Color(
-        r: tintColor.r * ray.color.r,
-        g: tintColor.g * ray.color.g,
-        b: tintColor.b * ray.color.b
-      ),
-      time: ray.time
+      color: intersection.ray.color.multiply(tintColor),
+      time: intersection.ray.time
     )
   }
 }

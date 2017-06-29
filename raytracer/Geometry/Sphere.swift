@@ -35,6 +35,7 @@ struct Sphere: ContainedSurface {
           point: point,
           normal: normalAt(point),
           material: material,
+          ray: ray,
           time: ray.time
         )
       } else if t2 >= min && t <= max {
@@ -43,6 +44,7 @@ struct Sphere: ContainedSurface {
           point: point,
           normal: normalAt(point),
           material: material,
+          ray: ray,
           time: ray.time
         )
       } else {

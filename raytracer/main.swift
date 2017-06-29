@@ -13,7 +13,7 @@ Raytracer(
     up: Vector(x: 0, y: 1, z: 0),
     vfov: 50,
     aspect: 2,
-    aperture: 0.05,
+    aperture: 0.04,
     focalDistance: (focus - origin).length
   ),
   surface: UnboundedSurfaceList(surfaces: [
@@ -44,8 +44,8 @@ Raytracer(
           radius: 0.7,
           material: Diffuse(color: Color(0xffe9dd), reflectivity: 0.6)
         ),
-        density: 1,
-        color: Color(0xFFFFFF)
+        density: 10,
+        color: Color(0xFFEEEE)
       ),
       Sphere(
         center: Point(x: 4.2, y: 0.9, z: -5),
@@ -79,7 +79,7 @@ Raytracer(
 ).render(
   w: 400,
   h: 200,
-  samples: 12,
+  samples: 2,
   time: TimeRange(from: 0, to: 1)
 ) { (image: [[Color]]) in
   writePNG(
