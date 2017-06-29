@@ -41,5 +41,6 @@ struct Intersection {
   let point: Vector4
   let normal: Vector4
   let material: Material
+  let ray: Ray
   let time: TimeRange
 }

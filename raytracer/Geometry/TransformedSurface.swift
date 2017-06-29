@@ -18,6 +18,7 @@ struct TransformedSurface: Surface {
         point: transformation * intersection.point,
         normal: transformation * intersection.normal,
         material: intersection.material,
+        ray: ray,
         time: ray.time
       )
     } else {
@@ -45,6 +46,7 @@ struct KeyframedSurface: Surface {
         point: transformation * intersection.point,
         normal: transformation * intersection.normal,
         material: intersection.material,
+        ray: ray,
         time: ray.time
       )
     } else {

@@ -60,6 +60,7 @@ struct Triangle: FiniteSurface {
           point: p,
           normal: normal * (ray.direction.dot(normal) > 0 ? -1 : 1),
           material: material,
+          ray: ray,
           time: ray.time
         )
       }

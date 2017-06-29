@@ -31,6 +31,7 @@ struct Volume: ContainedSurface {
           point: ray.point,
           normal: randomVector(),
           material: end.material,
+          ray: ray,
           time: ray.time
         )
       } else {
@@ -44,6 +45,7 @@ struct Volume: ContainedSurface {
             point: start.point,
             normal: start.normal,
             material: skin.material,
+            ray: ray,
             time: start.time
           )
         } else {
@@ -67,6 +69,7 @@ struct Volume: ContainedSurface {
           point: start.point + path.normalized()*distanceTravelled,
           normal: ray.direction.normalized() * -1,
           material: start.material,
+          ray: ray,
           time: start.time
         )
       }
