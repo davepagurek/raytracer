@@ -30,6 +30,21 @@ This is a Monte Carlo style 3d renderer (so the more samples you use, the closer
 - Lens blur
 - Motion blur
 
+## Usage
+
+Edit `Sources/Raytracer/main.swift` to change the size of the image, objects, etc. Then run the raytracer:
+
+```
+swift build
+.build/debug/Raytracer
+```
+
+## Explanation
+
+A general overview of ratracing: http://www.davepagurek.com/blog/how-raytracing-works
+
+Subsurface scattering: http://www.davepagurek.com/blog/volumes-subsurface-scattering
+
 ### Antialiasing
 Antialiasing works by first rendering an image, then applying a find edges filter, and then rerendering edge areas at a sub-pixel level.
 
